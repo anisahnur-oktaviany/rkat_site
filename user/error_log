@@ -1,0 +1,121 @@
+[03-Sep-2023 20:27:21 Asia/Jakarta] PHP Notice:  Undefined variable: koneksi in /home/rkatsite/public_html/user/run.php on line 8
+[03-Sep-2023 20:27:21 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/rkatsite/public_html/user/run.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/rkatsite/public_html/user/run.php on line 8
+[03-Sep-2023 20:27:26 Asia/Jakarta] PHP Notice:  Undefined variable: koneksi in /home/rkatsite/public_html/user/run.php on line 8
+[03-Sep-2023 20:27:26 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/rkatsite/public_html/user/run.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/rkatsite/public_html/user/run.php on line 8
+[03-Sep-2023 20:35:19 Asia/Jakarta] PHP Notice:  Undefined index: id in /home/rkatsite/public_html/user/run.php on line 5
+[03-Sep-2023 20:35:19 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on bool in /home/rkatsite/public_html/user/run.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/rkatsite/public_html/user/run.php on line 9
+[03-Sep-2023 20:35:39 Asia/Jakarta] PHP Notice:  Undefined index: id in /home/rkatsite/public_html/user/run.php on line 5
+[03-Sep-2023 20:35:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on bool in /home/rkatsite/public_html/user/run.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/rkatsite/public_html/user/run.php on line 9
+[03-Sep-2023 20:55:45 Asia/Jakarta] PHP Notice:  Undefined index: id in /home/rkatsite/public_html/user/input.php on line 5
+[03-Sep-2023 20:55:45 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on bool in /home/rkatsite/public_html/user/input.php:25
+Stack trace:
+#0 {main}
+  thrown in /home/rkatsite/public_html/user/input.php on line 25
+[11-Sep-2023 22:48:31 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 527
+[11-Sep-2023 23:25:48 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:29:15 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:31:18 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:40:50 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:41:01 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:43:40 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:44:06 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:44:39 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:44:40 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:44:40 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:44:40 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:44:56 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:45:31 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:46:09 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:46:10 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:49:04 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:49:04 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:49:05 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:49:05 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:50:43 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:50:44 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:50:45 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:51:27 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:54:15 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:55:48 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:55:49 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:56:15 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:56:15 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:56:33 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:56:46 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:56:46 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:56:47 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:56:49 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:58:09 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[11-Sep-2023 23:58:09 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:01:52 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:06:48 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:08:19 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:30:12 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:31:26 Asia/Jakarta] PHP Notice:  Undefined variable: id_id in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:31:28 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on bool in /home/rkatsite/public_html/user/input.php:25
+Stack trace:
+#0 {main}
+  thrown in /home/rkatsite/public_html/user/input.php on line 25
+[12-Sep-2023 00:32:00 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:32:00 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:32:00 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:32:17 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:32:23 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:32:46 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:32:52 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:33:06 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:33:12 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:33:45 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:33:53 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:34:21 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:34:21 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:34:21 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:34:44 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:36:27 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:37:13 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:37:13 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:37:13 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:37:50 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:40:46 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 66
+[12-Sep-2023 00:41:47 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:42:19 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:42:30 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:42:37 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:43:05 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:45:25 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:48:17 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:48:27 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:48:27 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:48:27 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 00:48:52 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:50:12 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:50:47 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:52:42 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 00:55:06 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '"', expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/rkatsite/public_html/user/tambah_satker.php on line 124
+[12-Sep-2023 04:39:46 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 04:39:46 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 04:39:46 Asia/Jakarta] PHP Notice:  Undefined index: satuan_harga in /home/rkatsite/public_html/user/run.php on line 526
+[12-Sep-2023 06:18:02 Asia/Jakarta] PHP Notice:  Undefined index: kode_detail in /home/rkatsite/public_html/user/input.php on line 1224
+[12-Sep-2023 06:18:02 Asia/Jakarta] PHP Notice:  Undefined index: kode_detail in /home/rkatsite/public_html/user/input.php on line 1224
+[12-Sep-2023 06:18:02 Asia/Jakarta] PHP Notice:  Undefined index: kode_detail in /home/rkatsite/public_html/user/input.php on line 1224
+[12-Sep-2023 06:18:02 Asia/Jakarta] PHP Notice:  Undefined index: kode_detail in /home/rkatsite/public_html/user/input.php on line 1224
+[12-Sep-2023 06:18:02 Asia/Jakarta] PHP Notice:  Undefined index: kode_detail in /home/rkatsite/public_html/user/input.php on line 1224
+[12-Sep-2023 06:18:02 Asia/Jakarta] PHP Notice:  Undefined index: kode_detail in /home/rkatsite/public_html/user/input.php on line 1224
+[12-Sep-2023 06:18:02 Asia/Jakarta] PHP Notice:  Undefined index: kode_detail in /home/rkatsite/public_html/user/input.php on line 1224
+[12-Sep-2023 06:18:02 Asia/Jakarta] PHP Notice:  Undefined index: kode_detail in /home/rkatsite/public_html/user/input.php on line 1224
+[12-Sep-2023 06:18:26 Asia/Jakarta] PHP Notice:  Undefined index: kode_detail in /home/rkatsite/public_html/user/input.php on line 1224
+[12-Sep-2023 06:18:26 Asia/Jakarta] PHP Notice:  Undefined index: kode_detail in /home/rkatsite/public_html/user/input.php on line 1224
+[12-Sep-2023 06:18:26 Asia/Jakarta] PHP Notice:  Undefined index: kode_detail in /home/rkatsite/public_html/user/input.php on line 1224
+[12-Sep-2023 06:18:26 Asia/Jakarta] PHP Notice:  Undefined index: kode_detail in /home/rkatsite/public_html/user/input.php on line 1224
