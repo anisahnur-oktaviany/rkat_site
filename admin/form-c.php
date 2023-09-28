@@ -13,13 +13,10 @@ $koneksi= new mysqli("localhost", "root", "", "rkatsite_tapera") or die ("Koneks
 
 require 'koneksi.php';
 require 'function.php';
-$id_id = $_GET["id"];
+
 $datatest = array();
 
-$ambil = $koneksi->query("SELECT * FROM tgj WHERE id_tgj = $id_id");
-while ($tiap = $ambil->fetch_assoc()) {
-  $datatest[] = $tiap;
-}
+
 foreach ($datatest as &$value0) {
   $value0['output'] = array();
   $value0['total'] = 0;
@@ -49,10 +46,8 @@ foreach ($datatest as &$value0) {
         ON compile_output.id_program = program.id_program
       LEFT JOIN kegiatan
         ON compile_output.id_kegiatan = kegiatan.id_kegiatan
-      LEFT JOIN tgj 
-        ON output_user.id_tgj = tgj.id_tgj
     WHERE
-      output_user.id_tgj = $id_id
+      output_user.id_pengadaan = $id_id
   ");
 
   while ($tiap1 = $ambil1->fetch_assoc()) {
@@ -149,8 +144,7 @@ $statement = $koneksi->query("
     view_grand_table.nama_sasaranstrategis
   FROM
     view_grand_table
-  WHERE
-    view_grand_table.id_tgj = $id_id
+  
   ;
 ");
 $result['Sasaran Strategis'] = $statement->fetch_all(MYSQLI_ASSOC);
@@ -165,8 +159,7 @@ $statement = $koneksi->query("
     view_grand_table.satuan_indikatorutama
   FROM
     view_grand_table
-  WHERE
-    view_grand_table.id_tgj = $id_id
+ 
   ;
 ");
 $result['IKU'] = $statement->fetch_all(MYSQLI_ASSOC);
@@ -179,8 +172,7 @@ $statement = $koneksi->query("
     view_grand_table.nama_program
   FROM
     view_grand_table
-  WHERE
-    view_grand_table.id_tgj = $id_id
+  
   ;
 ");
 while ($result_program = $statement->fetch_assoc()) {
@@ -191,8 +183,7 @@ while ($result_program = $statement->fetch_assoc()) {
     FROM
       view_final_table
     WHERE
-        view_final_table.id_tgj = $id_id
-        AND view_final_table.kode_program = '$result_program[kode_program]'
+        view_final_table.kode_program = '$result_program[kode_program]'
         AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
     ;
   ");
@@ -206,8 +197,7 @@ while ($result_program = $statement->fetch_assoc()) {
     FROM
       view_final_table
     WHERE
-        view_final_table.id_tgj = $id_id
-        AND view_final_table.kode_program = '$result_program[kode_program]'
+        view_final_table.kode_program = '$result_program[kode_program]'
         AND view_final_table.alokasi_detail = 'Inisitif Strategis'
     ;
   ");
@@ -228,8 +218,6 @@ $statement = $koneksi->query("
     view_grand_table.nama_sasaranprogram
   FROM
     view_grand_table
-  WHERE
-    view_grand_table.id_tgj = $id_id
   ;
 ");
 $result['Sasaran Program'] = $statement->fetch_all(MYSQLI_ASSOC);
@@ -244,8 +232,6 @@ $statement = $koneksi->query("
     view_grand_table.satuan_indikatorprogram
   FROM
     view_grand_table
-  WHERE
-    view_grand_table.id_tgj = $id_id
   ;
 ");
 $result['IKP'] = $statement->fetch_all(MYSQLI_ASSOC);
@@ -258,8 +244,6 @@ $statement = $koneksi->query("
     view_grand_table.nama_kegiatan
   FROM
     view_grand_table
-  WHERE
-    view_grand_table.id_tgj = $id_id
   ;
 ");
 while ($result_kegiatan = $statement->fetch_assoc()) {
@@ -270,8 +254,7 @@ while ($result_kegiatan = $statement->fetch_assoc()) {
     FROM
       view_final_table
     WHERE
-        view_final_table.id_tgj = $id_id
-        AND view_final_table.kode_kegiatan = '$result_kegiatan[kode_kegiatan]'
+        view_final_table.kode_kegiatan = '$result_kegiatan[kode_kegiatan]'
         AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
     ;
   ");
@@ -285,8 +268,7 @@ while ($result_kegiatan = $statement->fetch_assoc()) {
     FROM
       view_final_table
     WHERE
-        view_final_table.id_tgj = $id_id
-        AND view_final_table.kode_kegiatan = '$result_kegiatan[kode_kegiatan]'
+        view_final_table.kode_kegiatan = '$result_kegiatan[kode_kegiatan]'
         AND view_final_table.alokasi_detail = 'Inisitif Strategis'
     ;
   ");
@@ -307,8 +289,6 @@ $statement = $koneksi->query("
     view_grand_table.nama_sasarankegiatan
   FROM
     view_grand_table
-  WHERE
-    view_grand_table.id_tgj = $id_id
   ;
 ");
 $result['Sasaran Kegiatan'] = $statement->fetch_all(MYSQLI_ASSOC);
@@ -323,8 +303,6 @@ $statement = $koneksi->query("
     view_grand_table.satuan_indikatorkegiatan
   FROM
     view_grand_table
-  WHERE
-    view_grand_table.id_tgj = $id_id
   ;
 ");
 $result['IKK'] = $statement->fetch_all(MYSQLI_ASSOC);
@@ -340,8 +318,6 @@ $statement = $koneksi->query("
     view_grand_table.satuan_output
   FROM
     view_grand_table
-  WHERE
-    view_grand_table.id_tgj = $id_id
   ;
 ");
 while ($result_output = $statement->fetch_assoc()) {
@@ -352,8 +328,7 @@ while ($result_output = $statement->fetch_assoc()) {
     FROM
       view_final_table
     WHERE
-        view_final_table.id_tgj = $id_id
-        AND view_final_table.kode_output = '$result_output[kode_output]'
+        view_final_table.kode_output = '$result_output[kode_output]'
         AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
     ;
   ");
@@ -367,8 +342,7 @@ while ($result_output = $statement->fetch_assoc()) {
     FROM
       view_final_table
     WHERE
-        view_final_table.id_tgj = $id_id
-        AND view_final_table.kode_output = '$result_output[kode_output]'
+        view_final_table.kode_output = '$result_output[kode_output]'
         AND view_final_table.alokasi_detail = 'Inisitif Strategis'
     ;
   ");
@@ -386,8 +360,7 @@ while ($result_output = $statement->fetch_assoc()) {
     FROM
       view_final_table
     WHERE
-      view_final_table.id_tgj = $id_id
-      AND view_final_table.kode_output = '$result_output[kode_output]'
+      view_final_table.kode_output = '$result_output[kode_output]'
     ;
   ");
   while ($result_komponen = $sub_statement->fetch_assoc()) {
@@ -401,8 +374,7 @@ while ($result_output = $statement->fetch_assoc()) {
       FROM
         view_final_table
       WHERE
-          view_final_table.id_tgj = $id_id
-          AND view_final_table.kode_output = '$result_output[kode_output]'
+          view_final_table.kode_output = '$result_output[kode_output]'
           AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
           AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
       ;
@@ -417,8 +389,7 @@ while ($result_output = $statement->fetch_assoc()) {
       FROM
         view_final_table
       WHERE
-          view_final_table.id_tgj = $id_id
-          AND view_final_table.kode_output = '$result_output[kode_output]'
+          view_final_table.kode_output = '$result_output[kode_output]'
           AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
           AND view_final_table.alokasi_detail = 'Inisitif Strategis'
       ;
@@ -437,8 +408,7 @@ while ($result_output = $statement->fetch_assoc()) {
       FROM
         view_final_table
       WHERE
-        view_final_table.id_tgj = $id_id
-        AND view_final_table.kode_output = '$result_output[kode_output]'
+        view_final_table.kode_output = '$result_output[kode_output]'
         AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
       ;
     ");
@@ -450,8 +420,7 @@ while ($result_output = $statement->fetch_assoc()) {
         FROM
           view_final_table
         WHERE
-            view_final_table.id_tgj = $id_id
-            AND view_final_table.kode_output = '$result_output[kode_output]'
+            view_final_table.kode_output = '$result_output[kode_output]'
             AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
             AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
             AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
@@ -467,8 +436,7 @@ while ($result_output = $statement->fetch_assoc()) {
         FROM
           view_final_table
         WHERE
-            view_final_table.id_tgj = $id_id
-            AND view_final_table.kode_output = '$result_output[kode_output]'
+            view_final_table.kode_output = '$result_output[kode_output]'
             AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
             AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
             AND view_final_table.alokasi_detail = 'Inisitif Strategis'
@@ -488,8 +456,7 @@ while ($result_output = $statement->fetch_assoc()) {
         FROM
           view_final_table
         WHERE
-          view_final_table.id_tgj = $id_id
-          AND view_final_table.kode_output = '$result_output[kode_output]'
+          view_final_table.kode_output = '$result_output[kode_output]'
           AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
           AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
         ;
@@ -502,8 +469,7 @@ while ($result_output = $statement->fetch_assoc()) {
           FROM
             view_final_table
           WHERE
-              view_final_table.id_tgj = $id_id
-              AND view_final_table.kode_output = '$result_output[kode_output]'
+              view_final_table.kode_output = '$result_output[kode_output]'
               AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
               AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
               AND view_final_table.kode_akun = '$result_akun[kode_akun]'
@@ -520,8 +486,7 @@ while ($result_output = $statement->fetch_assoc()) {
           FROM
             view_final_table
           WHERE
-              view_final_table.id_tgj = $id_id
-              AND view_final_table.kode_output = '$result_output[kode_output]'
+              view_final_table.kode_output = '$result_output[kode_output]'
               AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
               AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
               AND view_final_table.kode_akun = '$result_akun[kode_akun]'
@@ -554,8 +519,7 @@ while ($result_output = $statement->fetch_assoc()) {
           FROM
             view_final_table
           WHERE
-            view_final_table.id_tgj = $id_id
-            AND view_final_table.kode_output = '$result_output[kode_output]'
+            view_final_table.kode_output = '$result_output[kode_output]'
             AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
             AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
             AND view_final_table.kode_akun = '$result_akun[kode_akun]'
@@ -804,22 +768,20 @@ $statement->close();
                       <tr>
                         <th rowspan="2" style="text-align: center; border: 1px solid black">Kode</th>
                         <th rowspan="2" style="text-align: center; border: 1px solid black">Uraian</th>
-                        <th rowspan="2" style="text-align: center; border: 1px solid black">Volume</th>
-                       
+                        <th rowspan="2" style="text-align: center; border: 1px solid black">Volume</th>                     
                         <th rowspan="2" style="text-align: center; border: 1px solid black">Satuan</th>
                         <th rowspan="2" style="text-align: center; border: 1px solid black">Total Biaya</th>
                         <th colspan="3" style="text-align: center; border: 1px solid black">Alokasi</th>
                       </tr>
                       <tr>
-                        <th style="text-align: center; border: 1px solid black">Regular</th>
-                        <th style="text-align: center; border: 1px solid black">Inisiatif Strategis</th>
+                        <th style="text-align: center; border: 1px solid black">OPEX</th>
+                        <th style="text-align: center; border: 1px solid black">CAPEX</th>
                         <th style="text-align: center; border: 1px solid black">Jumlah</th>
                       </tr>
                       <tr>
                         <td style="text-align: center; border: 1px solid black">[1]</td>
                         <td style="text-align: center; border: 1px solid black">[2]</td>
-                        <td style="text-align: center; border: 1px solid black">[3]</td>
-                       
+                        <td style="text-align: center; border: 1px solid black">[3]</td>                     
                         <td style="text-align: center; border: 1px solid black">[5]</td>
                         <td style="text-align: center; border: 1px solid black">[6]</td>
                         <td style="text-align: center; border: 1px solid black">[7]</td>
@@ -828,6 +790,22 @@ $statement->close();
                       </tr>
                     </thead>
                     <tbody>
+                    <?php
+                      $noSasgis = 1;
+                      foreach ($result['Sasaran Strategis'] as &$result_sasaran_strategis):
+                      ?>
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"> </td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>    
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                      <?php       
+                    endforeach;
+                      ?>
                       <?php
                       $noSasgis = 1;
                       foreach ($result['Sasaran Strategis'] as &$result_sasaran_strategis):
@@ -838,16 +816,15 @@ $statement->close();
                           <b>Sasaran Strategis <?= $noSasgis++ ?>: </b>
                           <br> <?= $result_sasaran_strategis['nama_sasaranstrategis'] ?>
                         </td>
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"> </td>
                         <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>    
                         <td style="border-right: 1px solid black"></td>
                         <td style="border-right: 1px solid black"></td>
                         
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                      </tr>
                       <?php
-                      endforeach;
+                    endforeach;
                       ?>
                       <?php
                       $noIKU = 1;
@@ -1009,8 +986,7 @@ $statement->close();
                         </td>
                         <td style="border-right: 1px solid black"> <?= number_format($result_output['volume_output']) ?> </td>
                         <td style="border-right: 1px solid black"> <?= $result_output['satuan_output'] ?> </td>
-                        <td style="border-right: 1px solid black"></td>
-                     
+                        <td style="border-right: 1px solid black"></td>                  
                         <td style="border-right: 1px solid black"> <?= number_format($result_output['total_reg']) ?> </td>
                         <td style="border-right: 1px solid black"> <?= number_format($result_output['total_str']) ?> </td>
                         <td style="border-right: 1px solid black"> <?= number_format($result_output['total']) ?> </td>
@@ -1053,7 +1029,7 @@ $statement->close();
                       </tr> 
                             <?php
                             $noAkun = 1;
-                            foreach ($result_aktivitas['Akun'] as &$result_akun):
+                            foreach (($result_aktivitas['Akun']?? array()) as &$result_akun):
                             ?> 
                       <tr style="empty-cells: hide">
                         <td style="border-bottom: 1px dashed black; border-left: 1px solid black; border-right: 1px solid black"> <?= $result_akun['kode_akun'] ?> </td>
@@ -1070,7 +1046,7 @@ $statement->close();
                         <td style="border-right: 1px solid black"> <?= number_format($result_akun['total']) ?> </td>
                       </tr> 
                               <?php
-                              foreach ($result_akun['Detail'] as &$result_detail):
+                              foreach (($result_akun['Detail'] ?? array()) as &$result_detail):
                               ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"></td>
@@ -1101,293 +1077,7 @@ $statement->close();
                 </div>
               </div>
             </div>
-            <br>
-            <br>
-            <div class="card shadow mb-10">
-              <div class="card-body" style="overflow-x: auto">
-                <div id="divTableDataHolder2">
-                  <table id="example-table" class="table table-bordered" style="width: 100%">
-                    <thead>
-                      <tr>
-                        <th colspan="2" style="text-align: center; border: 1px solid black">FORMULIR B</th>
-                        <th colspan="3" style="text-align: center; border: 1px solid black">RENCANA KERJA DAN ANGARAN <br> BP TAPERA <br> TA 2023 </th>
-                        <td colspan="3" style="text-align: center; border: 1px solid black">
-                          <img src="https://rkat.site/user/img/login.jpg" width="50" height="50">
-                        </td>
-                      </tr>
-                      <tr>
-                        <th rowspan="2" style="text-align: center; border: 1px solid black">Kode</th>
-                        <th rowspan="2" style="text-align: center; border: 1px solid black">Uraian</th>
-                        <th rowspan="2" style="text-align: center; border: 1px solid black">Volume</th>
-                       
-                        <th rowspan="2" style="text-align: center; border: 1px solid black">Satuan</th>
-                        <th rowspan="2" style="text-align: center; border: 1px solid black">Total Biaya</th>
-                        <th colspan="3" style="text-align: center; border: 1px solid black">Alokasi</th>
-                      </tr>
-                      <tr>
-                        <th style="text-align: center; border: 1px solid black ">Regular</th>
-                        <th style="text-align: center; border: 1px solid black ">Inisiatif Strategis</th>
-                        <th style="text-align: center; border: 1px solid black ">Jumlah</th>
-                      </tr>
-                      <tr>
-                        <td style="text-align: center; border: 1px solid black">[1]</td>
-                        <td style="text-align: center; border: 1px solid black">[2]</td>
-                        <td style="text-align: center; border: 1px solid black">[3]</td>
-
-                        <td style="text-align: center; border: 1px solid black">[5]</td>
-                        <td style="text-align: center; border: 1px solid black">[6]</td>
-                        <td style="text-align: center; border: 1px solid black">[7]</td>
-                        <td style="text-align: center; border: 1px solid black">[8]</td>
-                        <td style="text-align: center; border: 1px solid black">[9]</td>
-                      </tr>
-                    </thead>
-                    <tbody> <?php
-                      $no = 1;
-                      foreach ($value0['output'] as &$output) :
-                        $suboutput = $output['total'] + $output['total_non'];
-                      ?> <tr style="empty-cells: hide">
-                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $output['kode_sasaranstrategis'] ?> </td>
-                        <td style="border-right: 1px solid black">
-                          <b>Sasaran Strategis <?= $no++ ?>: </b>
-                          <br> <?= $output['nama_sasaranstrategis'] ?>
-                        </td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                      </tr> <?php $no = 1; ?> <tr style="empty-cells: hide">
-                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $output['kode_indikatorutama'] ?> </td>
-                        <td style="border-right: 1px solid black">
-                          <b>IKU <?= $no++ ?>: </b>
-                          <br> <?= $output['nama_indikatorutama'] ?>
-                        </td>
-                        <td style="border-right: 1px solid black"> <?= number_format($output['volume_indikatorutama']) ?> </td>
-                        <td style="border-right: 1px solid black"> <?= $output['satuan_indikatorutama'] ?> </td>
-                        <td style="border-right: 1px solid black"></td>
-                       
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                      </tr> <?php $no = 1; ?> <tr style="empty-cells: hide">
-                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $output['kode_program'] ?> </td>
-                        <td style="border-right: 1px solid black">
-                          <b>Program <?= $no++ ?>: </b>
-                          <br> <?= $output['nama_program'] ?>
-                        </td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                      
-                        <td style="border-right: 1px solid black"> <?= number_format($output['total_non']) ?> </td>
-                        <td style="border-right: 1px solid black"> <?= number_format($output['total']) ?> </td>
-                        <td style="border-right: 1px solid black"> <?= number_format($suboutput) ?> </td>
-                      </tr> <?php $no = 1; ?> <tr style="empty-cells: hide">
-                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $output['kode_sasaranprogram'] ?> </td>
-                        <td style="border-right: 1px solid black">
-                          <b>Sasaran Program <?= $no++ ?>: </b>
-                          <br> <?= $output['nama_sasaranprogram'] ?>
-                        </td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                      
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                      </tr> <?php $no = 1; ?> <tr style="empty-cells: hide">
-                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $output['kode_indikatorprogram'] ?> </td>
-                        <td style="border-right: 1px solid black">
-                          <b>IKP <?= $no++ ?>: </b>
-                          <br> <?= $output['nama_indikatorprogram'] ?>
-                        </td>
-                        <td style="border-right: 1px solid black"> <?= number_format($output['volume_indikatorprogram']) ?> </td>
-                        <td style="border-right: 1px solid black"> <?= $output['satuan_indikatorprogram'] ?></td>
-                        <td style="border-right: 1px solid black"> </td>
-     
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                      </tr> <?php 
-                      endforeach;
-                      ?>
-                  </tbody>
-                </table>
-                <script>
-                    $('[id$=downloadexcel2]').click(function(e) {
-                      window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('div[id$=divTableDataHolder2]').html()));
-                      e.preventDefault()
-                    });
-                  </script>
-              </div>
-            </div>
-            <br>
-            <br>
-            <div class="card shadow mb-10">
-              <div class="card-body" style="overflow-x: auto">
-                <div id="divTableDataHolder3">
-                  <table id="example-table" class="table table-bordered" style="width: 100%">
-                    <thead>
-                      <tr>
-                        <th colspan="2" style="text-align: center; border: 1px solid black">FORMULIR A</th>
-                        <th colspan="3" style="text-align: center; border: 1px solid black">RENCANA KERJA DAN ANGARAN <br> BP TAPERA <br> TA 2023 </th>
-                        <td colspan="3" style="text-align: center; border: 1px solid black">
-                          <img src="https://rkat.site/user/img/login.jpg" width="50" height="50">
-                        </td>
-                      </tr>
-                      <tr>
-                        <th rowspan="2" style="text-align: center; border: 1px solid black">Kode</th>
-                        <th rowspan="2" style="text-align: center; border: 1px solid black">Uraian</th>
-                        <th rowspan="2" style="text-align: center; border: 1px solid black">Volume</th>
-
-                        <th rowspan="2" style="text-align: center; border: 1px solid black">Satuan</th>
-                        <th rowspan="2" style="text-align: center; border: 1px solid black">Total Biaya</th>
-                        <th colspan="3" style="text-align: center; border: 1px solid black">Alokasi</th>
-                      </tr>
-                      <tr>
-                        <th style="text-align: center; border: 1px solid black ">Regular</th>
-                        <th style="text-align: center; border: 1px solid black ">Inisiatif Strategis</th>
-                        <th style="text-align: center; border: 1px solid black ">Jumlah</th>
-                      </tr>
-                      <tr>
-                        <td style="text-align: center; border: 1px solid black">[1]</td>
-                        <td style="text-align: center; border: 1px solid black">[2]</td>
-                        <td style="text-align: center; border: 1px solid black">[3]</td>
-
-                        <td style="text-align: center; border: 1px solid black">[5]</td>
-                        <td style="text-align: center; border: 1px solid black">[6]</td>
-                        <td style="text-align: center; border: 1px solid black">[7]</td>
-                        <td style="text-align: center; border: 1px solid black">[8]</td>
-                        <td style="text-align: center; border: 1px solid black">[9]</td>
-                      </tr>
-                    </thead>
-                   <tbody> <?php
-                      $no = 1;
-                      foreach ($value0['output'] as &$output) :
-                        $suboutput = $output['total'] + $output['total_non'];
-                      ?> <tr style="empty-cells: hide">
-                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $output['kode_sasaranstrategis'] ?> </td>
-                        <td style="border-right: 1px solid black">
-                          <b>Sasaran Strategis <?= $no++ ?>: </b>
-                          <br> <?= $output['nama_sasaranstrategis'] ?>
-                        </td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                       
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                      </tr> <?php $no = 1; ?> <tr style="empty-cells: hide">
-                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $output['kode_indikatorutama'] ?> </td>
-                        <td style="border-right: 1px solid black">
-                          <b>IKU <?= $no++ ?>: </b>
-                          <br> <?= $output['nama_indikatorutama'] ?>
-                        </td>
-                        <td style="border-right: 1px solid black"> <?= number_format($output['volume_indikatorutama']) ?> </td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"> <?= $output['satuan_indikatorutama'] ?> </td>
-                       
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                      </tr> <?php $no = 1; ?> <tr style="empty-cells: hide">
-                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $output['kode_program'] ?> </td>
-                        <td style="border-right: 1px solid black">
-                          <b>Program <?= $no++ ?>: </b>
-                          <br> <?= $output['nama_program'] ?>
-                        </td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                   
-                        <td style="border-right: 1px solid black"> <?= number_format($output['total_non']) ?> </td>
-                        <td style="border-right: 1px solid black"> <?= number_format($output['total']) ?> </td>
-                        <td style="border-right: 1px solid black"> <?= number_format($suboutput) ?> </td>
-                      </tr> <?php $no = 1; ?> <tr style="empty-cells: hide">
-                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $output['kode_sasaranprogram'] ?> </td>
-                        <td style="border-right: 1px solid black">
-                          <b>Sasaran Program <?= $no++ ?>: </b>
-                          <br> <?= $output['nama_sasaranprogram'] ?>
-                        </td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                      
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                      </tr> <?php $no = 1; ?> <tr style="empty-cells: hide">
-                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $output['kode_indikatorprogram'] ?> </td>
-                        <td style="border-right: 1px solid black">
-                          <b>IKP <?= $no++ ?>: </b>
-                          <br> <?= $output['nama_indikatorprogram'] ?>
-                        </td>
-                        <td style="border-right: 1px solid black"> <?= number_format($output['volume_indikatorprogram']) ?> </td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"> <?= $output['satuan_indikatorprogram'] ?> </td>
-                       
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                      </tr> <?php $no = 1; ?> <tr style="empty-cells: hide">
-                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $output['kode_kegiatan'] ?> </td>
-                        <td style="border-right: 1px solid black">
-                          <b>Kegiatan <?= $no++ ?>: </b>
-                          <br> <?= $output['nama_kegiatan'] ?>
-                        </td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-
-                        <td style="border-right: 1px solid black"> <?= number_format($output['total_non']) ?> </td>
-                        <td style="border-right: 1px solid black"> <?= number_format($output['total']) ?> </td>
-                        <td style="border-right: 1px solid black"> <?= number_format($suboutput) ?> </td>
-                      </tr> <?php $no = 1; ?> <tr style="empty-cells: hide">
-                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $output['kode_sasarankegiatan'] ?> </td>
-                        <td style="border-right: 1px solid black">
-                          <b>Sasaran Kegiatan <?= $no++ ?>: </b>
-                          <br> <?= $output['nama_sasarankegiatan'] ?>
-                        </td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                      </tr> <?php $noIndgik = 1; ?> <tr style="empty-cells: hide">
-                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $output['kode_indikatorkegiatan'] ?> </td>
-                        <td style="border-right: 1px solid black">
-                          <b>IKK <?= $noIndgik++ ?>: </b>
-                          <br> <?= $output['nama_indikatorkegiatan'] ?>
-                        </td>
-                        <td style="border-right: 1px solid black"> <?= number_format($output['volume_indikatorkegiatan']) ?> </td>
-                        <td style="border-right: 1px solid black"> <?= $output['satuan_indikatorkegiatan'] ?> </td>
-                        <td style="border-right: 1px solid black"></td>
-
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                      </tr>
-                      <?php endforeach; ?>
-                    </tbody>
-                  </table>
-                  <script>
-                    $('[id$=downloadexcel3]').click(function(e) {
-                      window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('div[id$=divTableDataHolder3]').html()));
-                      e.preventDefault()
-                    });
-                  </script>
-
-              </div>
-            </div>
-          </div>
-          <!-- /.container-fluid -->
-        </div>
-        <!-- End of Main Content -->
+          
         <!-- Footer -->
         <footer class="sticky-footer bg-white">
           <div class="container my-auto">

@@ -338,8 +338,8 @@ while ($tiapCO = $ambil->fetch_assoc()) {
                                             <td><?= $row['nama_kegiatan'] ?> </td>
                                             <td><?= $row['nama_sasarankegiatan'] ?> </td>
                                             <td><?= $row['nama_indikatorkegiatan'] ?> </td>
-                                            <td><?= $row['volume_indikatorutama'] ?> </td>
-                                            <td><?= $row['satuan_indikatorutama'] ?> </td>
+                                            <td><?= $row['volume_indikatorkegiatan'] ?> </td>
+                                            <td><?= $row['satuan_indikatorkegiatan'] ?> </td>
                                             <td><?= $row['nama_output'] ?> </td>
                                             <td>
                                                 <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#modalUbah<?= $no ?>"> Ubah </a>

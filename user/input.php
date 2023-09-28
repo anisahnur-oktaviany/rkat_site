@@ -17,7 +17,7 @@ while ($tiap = $ambil->fetch_assoc()) {
 
 $datacompileoutput = array();
 $ambil = $koneksi->query("SELECT * FROM compile_output LEFT JOIN output
-ON compile_output.id_output=output.id_output");
+ON compile_output.id_output=output.id_output LEFT JOIN indikator_utama ON compile_output.id_indikatorutama = indikator_utama.id_indikatorutama");
 while ($tiap = $ambil->fetch_assoc()) {
     $datacompileoutput[] = $tiap;
 }
@@ -1335,7 +1335,7 @@ while ($tiap = $ambil->fetch_assoc()) {
                     <?php endwhile; ?>
                     </tbody>
                     </table>
-                    
+                  
                     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	
                     <script type="text/javascript">

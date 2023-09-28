@@ -50,17 +50,20 @@
                 </div>
             </div>
 
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Rekap</span>
-            </a>
-            <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Components:</h6>
-                    <a class="collapse-item" href="form.php">Form</a>
-                </div>
-            </div>
-        </li>
+            <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTree" aria-expanded="true" aria-controls="collapseTree">
+              <i class="fas fa-fw fa-cog"></i>
+              <span>Formulir</span>
+          </a>
+          <div id="collapseTree" class="collapse" aria-labelledby="headingTree" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                  <h6 class="collapse-header">Components:</h6>
+                  <a class="collapse-item" href="form-a.php">Formulir A</a>
+                  <a class="collapse-item" href="form-b.php">Formulir B</a>
+                  <a class="collapse-item" href="form-c.php">Formulir C</a>
+              </div>
+          </div>
+      </li>
         <li class="nav-item">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
               <i class="fas fa-fw fa-cog"></i>
