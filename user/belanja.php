@@ -3,6 +3,7 @@ require 'koneksi.php';
 require 'function.php';
 $koneksi= new mysqli("localhost", "root", "", "rkatsite_tapera") or die ("Koneksi gagal");
 session_start();
+$id = $_SESSION['User']['id_rawtgj']; 
 //echo "<pre>"; 
 //print_r($_SESSION);
 //echo "</pre>";
@@ -31,7 +32,9 @@ ON compile_output.id_output=output.id_output");
 while ($tiap = $ambil->fetch_assoc()) {
     $datacompileoutput[] = $tiap;
 }
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -160,9 +163,9 @@ while ($tiap = $ambil->fetch_assoc()) {
                                 <tbody>
                                     <?php
                                     include 'koneksi.php';
-                                    $no = 1;
-                                  
-                                    $ib = mysqli_query($conn, "SELECT * FROM tgj LEFT JOIN raw_tgj ON tgj.id_rawtgj = raw_tgj.id_rawtgj");
+                                    $no = 1;    
+                                    
+                                    $ib = mysqli_query($conn, "SELECT * FROM raw_tgj WHERE id_rawtgj = '$_SESSION[id_rawtgj]'");
                                     while ($row = mysqli_fetch_array($ib)) :
                                     ?>
                                         <tr>
@@ -171,8 +174,8 @@ while ($tiap = $ambil->fetch_assoc()) {
                                             <td>
                                                 <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#modalUbah<?= $no ?>"> Ubah </a>
                                                 <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalHapus<?= $no ?>"> Hapus</a>
-                                                <a href="input.php?id=<?php echo $row['id_tgj']; ?>" class="btn btn-primary"> Input</a>
-                                                <a href="run.php?id=<?php echo $row['id_tgj']; ?> " class="btn btn-success"> Run</a>
+                                                <a href="pengadaan.php?id=<?php echo $row['id_tgj']; ?>" class="btn btn-primary"> View</a>
+                                                
                                             </td>
                                         </tr>
 
@@ -313,7 +316,7 @@ while ($tiap = $ambil->fetch_assoc()) {
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="../logout.php">Logout</a>
                 </div>
             </div>
         </div>

@@ -1,5 +1,8 @@
 <?php
 session_start();
+//echo "<pre>"; 
+//print_r($_SESSION);
+//echo "</pre>";
 require 'koneksi.php';
 require 'function.php';
 $id_id = $_GET["id"];
@@ -22,7 +25,8 @@ while ($tiap = $ambil->fetch_assoc()) {
 $dataoutput = array();
 $ambil = $koneksi->query("SELECT * FROM output_user LEFT JOIN compile_output
 ON output_user.id_compile=compile_output.id_compile LEFT JOIN output
-ON compile_output.id_output=output.id_output WHERE id_tgj = $id_id");
+ON compile_output.id_output=output.id_output LEFT JOIN pengadaan
+ON output_user.id_pengadaan=pengadaan.id_pengadaan WHERE pengadaan.id_pengadaan= $id_id AND pengadaan.id_rawtgj = ".$_SESSION['User']['id_rawtgj']);
 while ($tiap = $ambil->fetch_assoc()) {
     $dataoutput[] = $tiap;
 }
@@ -31,7 +35,7 @@ $dataaktivitas = array();
 $ambil = $koneksi->query("SELECT * FROM komponen LEFT JOIN output_user
 ON komponen.id_output_user=output_user.id_output_user LEFT JOIN compile_output
 ON output_user.id_compile=compile_output.id_compile LEFT JOIN output
-ON compile_output.id_output=output.id_output WHERE id_tgj = $id_id");
+ON compile_output.id_output=output.id_output WHERE id_pengadaan = $id_id");
 while ($tiap = $ambil->fetch_assoc()) {
     $dataaktivitas[] = $tiap;
 }
@@ -41,7 +45,7 @@ $ambil = $koneksi->query("SELECT * FROM aktivitas LEFT JOIN komponen
 ON aktivitas.id_komponen=komponen.id_komponen LEFT JOIN output_user
 ON komponen.id_output_user=output_user.id_output_user LEFT JOIN compile_output
 ON output_user.id_compile=compile_output.id_compile LEFT JOIN output
-ON compile_output.id_output=output.id_output WHERE id_tgj = $id_id");
+ON compile_output.id_output=output.id_output WHERE id_pengadaan = $id_id");
 while ($tiap = $ambil->fetch_assoc()) {
     $dataheader[] = $tiap;
 }
@@ -49,7 +53,9 @@ while ($tiap = $ambil->fetch_assoc()) {
 $datadetail = array();
 $ambil = $koneksi->query("SELECT * FROM header LEFT JOIN aktivitas
 ON header.id_aktivitas=aktivitas.id_aktivitas LEFT JOIN akun
-ON header.id_akun=akun.id_akun");
+ON header.id_akun=akun.id_akun LEFT JOIN komponen
+ON aktivitas.id_komponen=komponen.id_komponen LEFT JOIN output_user
+ON komponen.id_output_user=output_user.id_output_user WHERE id_pengadaan = $id_id");
 while ($tiap = $ambil->fetch_assoc()) {
     $datadetail[] = $tiap;
 }
@@ -314,18 +320,8 @@ while ($tiap = $ambil->fetch_assoc()) {
 
                                                     <!-- Modal body -->
                                                     <form method="POST" action="tambah_satker.php">
-                                                        <input type="hidden" name="user_id" value="<?php echo $id_id ?>" />
+                                                        <input type="hidden" name="id_pengadaan" value="<?= $id_id ?>" />
                                                         <div class="modal-body">
-
-                                                            <div class="mb-3">
-                                                                <label class="form-label">User</label>
-                                                                <select class="form-control" name="tgj">
-                                                                    <option value=""> Choose User </option>
-                                                                    <?php foreach ($datacompiletgj as $key => $value) : ?>
-                                                                        <option value="<?php echo $value["id_tgj"] ?>"><?php echo $value["nama_rawtgj"] ?> </option>
-                                                                    <?php endforeach ?>
-                                                                </select>
-                                                            </div>
 
                                                             <div class="mb-3">
                                                                 <label class="form-label">Output</label>
@@ -384,9 +380,9 @@ while ($tiap = $ambil->fetch_assoc()) {
                                     ON compile_output.id_indikatorkegiatan=indikator_kegiatan.id_indikatorkegiatan LEFT JOIN output
                                     ON compile_output.id_output=output.id_output LEFT JOIN program
                                     ON compile_output.id_program=program.id_program LEFT JOIN kegiatan
-                                    ON compile_output.id_kegiatan=kegiatan.id_kegiatan LEFT JOIN tgj
-                                    ON output_user.id_tgj=tgj.id_tgj LEFT JOIN raw_tgj
-                                    ON tgj.id_rawtgj=raw_tgj.id_rawtgj WHERE tgj.id_tgj = $id_id");
+                                    ON compile_output.id_kegiatan=kegiatan.id_kegiatan LEFT JOIN pengadaan
+                                    ON output_user.id_pengadaan=pengadaan.id_pengadaan LEFT JOIN raw_tgj
+                                    ON pengadaan.id_rawtgj=raw_tgj.id_rawtgj WHERE pengadaan.id_pengadaan = $id_id");
                                     while ($row = mysqli_fetch_array($ib)) :
                                     ?>
                                         <tr>
@@ -414,20 +410,9 @@ while ($tiap = $ambil->fetch_assoc()) {
                                                     <!-- Modal body -->
                                                
                                                     <form method="POST" action="tambah_satker.php">
-                                                        <input type="hidden" name="user_id" value="<?php echo $id_id ?>" />
+                                                        <input type="hidden" name="id_pengadaan" value="<?php echo $id_id ?>" />
                                                         <input type="hidden" name="output_user" value="<?= $row['id_output_user'] ?>">
                                                         <div class="modal-body">
-                                                   
-                                                            <div class="mb-3">
-                                                                <label class="form-label">PJ</label>
-                                                                <select class="form-control" name="tgj">
-                                                                    <option value="<?= $row['id_tgj'] ?>"> <?= $row['nama_rawtgj'] ?> </option>
-                                                                    <?php foreach ($datacompiletgj as $key => $value) : ?>
-                                                                        <option value="<?php echo $value["id_tgj"] ?>"><?php echo $value["nama_rawtgj"] ?> </option>
-                                                                    <?php endforeach ?>
-                                                                </select>
-                                                            </div>
-
                                                              <div class="mb-3">
                                                                 <label class="form-label">Output</label>
                                                                 <select class="form-control" name="output">
@@ -608,8 +593,8 @@ while ($tiap = $ambil->fetch_assoc()) {
                                     $ib = mysqli_query($conn, "SELECT * FROM komponen LEFT JOIN output_user 
                                     ON komponen.id_output_user=output_user.id_output_user LEFT JOIN compile_output
                                     ON output_user.id_compile=compile_output.id_compile LEFT JOIN output
-                                    ON compile_output.id_output=output.id_output LEFT JOIN tgj
-                                    ON output_user.id_tgj=tgj.id_tgj WHERE tgj.id_tgj = $id_id");
+                                    ON compile_output.id_output=output.id_output LEFT JOIN pengadaan
+                                    ON output_user.id_pengadaan=pengadaan.id_pengadaan WHERE pengadaan.id_pengadaan = $id_id");
                                     while ($row = mysqli_fetch_array($ib)) :
 
                                     ?>
@@ -808,7 +793,7 @@ while ($tiap = $ambil->fetch_assoc()) {
                                     $no = 1;
                                     $ib = mysqli_query($conn, "SELECT * FROM aktivitas LEFT JOIN komponen
                                     ON aktivitas.id_komponen=komponen.id_komponen LEFT JOIN output_user ON
-                                    komponen.id_output_user = output_user.id_output_user WHERE id_tgj = $id_id");
+                                    komponen.id_output_user = output_user.id_output_user WHERE id_pengadaan = $id_id");
                                     while ($row = mysqli_fetch_array($ib)) :
                                     ?>
                                         <tr>
@@ -1007,7 +992,7 @@ while ($tiap = $ambil->fetch_assoc()) {
                                     ON header.id_aktivitas=aktivitas.id_aktivitas LEFT JOIN akun
                                     ON header.id_akun=akun.id_akun LEFT JOIN komponen
                                     ON aktivitas.id_komponen=komponen.id_komponen LEFT JOIN output_user ON
-                                    komponen.id_output_user = output_user.id_output_user WHERE id_tgj = $id_id");
+                                    komponen.id_output_user = output_user.id_output_user WHERE id_pengadaan = $id_id");
                                     while ($row = mysqli_fetch_array($ib)) :
                                     ?>
                                         <tr>
@@ -1230,7 +1215,7 @@ while ($tiap = $ambil->fetch_assoc()) {
                                     ON header.id_akun=akun.id_akun LEFT JOIN aktivitas
                                     ON header.id_aktivitas=aktivitas.id_aktivitas LEFT JOIN komponen
                                     ON aktivitas.id_komponen=komponen.id_komponen LEFT JOIN output_user ON
-                                    komponen.id_output_user = output_user.id_output_user WHERE id_tgj = $id_id");
+                                    komponen.id_output_user = output_user.id_output_user WHERE id_pengadaan = $id_id");
                                     while ($row = mysqli_fetch_array($ib)) :
                                     ?>
                                         <tr>

@@ -1,8 +1,8 @@
 <?php  
 $koneksi= new mysqli("localhost", "root", "", "rkatsite_tapera") or die ("Koneksi gagal");
  session_start();
- //echo "<pre>"; 
  //print_r($_SESSION);
+ //echo "<pre>"; 
  //echo "</pre>";
  //session masuk paksa
     if (!isset($_SESSION['User'])) {
@@ -230,7 +230,7 @@ $koneksi= new mysqli("localhost", "root", "", "rkatsite_tapera") or die ("Koneks
               <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
               <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+                <a class="btn btn-primary" href="../logout.php">Logout</a>
               </div>
             </div>
           </div>

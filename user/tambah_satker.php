@@ -58,18 +58,18 @@ if (isset($_POST['hapus_tgj'])) {
 //OUTPUT
 
 if (isset($_POST['add_outputuser'])) {
-    $simpan = mysqli_query($conn, "INSERT INTO output_user (id_compile, volume_output, satuan_output, id_tgj) 
-    VALUES ('$_POST[output]','$_POST[volume_output]','$_POST[satuan_output]','$_POST[tgj]')");
+    $simpan = mysqli_query($conn, "INSERT INTO output_user (id_compile, volume_output, satuan_output, id_pengadaan) 
+    VALUES ('$_POST[output]','$_POST[volume_output]','$_POST[satuan_output]','$_POST[id_pengadaan]')");
 
     if ($simpan) {
         echo "<script>
                 alert('Data Berhasil Disimpan')
-                document.location='input.php?id=".$_POST['user_id']."';
+                document.location='input.php?id=".$_POST['id_pengadaan']."';
             </script>";
     } else {
         echo "<script>
                 alert('Penambahan Data Gagal')
-                document.location='input.php?id=".$_POST['user_id']."';
+                document.location='input.php?id=".$_POST['id_pengadaan']."';
             </script>";
     }
 };
@@ -78,19 +78,18 @@ if (isset($_POST['ubah_outputuser'])) {
     $ubah = mysqli_query($conn, "UPDATE output_user SET
     id_compile = '$_POST[output]',
     volume_output = '$_POST[volumeoutput]',
-    satuan_output = '$_POST[satuanoutput]',
-    id_tgj = '$_POST[tgj]' 
+    satuan_output = '$_POST[satuanoutput]'
     WHERE id_output_user = '$_POST[output_user]'");
 
     if ($ubah) {
         echo "<script>
         alert('Data Berhasil Diubah')
-        document.location = 'input.php?id=".$_POST['user_id']."';
+        document.location = 'input.php?id=".$_POST['id_pengadaan']."';
     </script>";
     } else {
         echo "<script>
         alert('Perubahan Data Gagal')
-        document.location = 'input.php?id=".$_POST['user_id']."';
+        document.location = 'input.php?id=".$_POST['id_pengadaan']."';
     </script>";
     }
 }
@@ -101,12 +100,12 @@ if (isset($_POST['hapus_outputuser'])) {
     if ($hapus) {
         echo "<script>
         alert('Data Berhasil Dihapus')
-        document.location = 'input.php?id=".$_POST['user_id']."';
+        document.location = 'input.php?id=".$_POST['id_pengadaan']."';
     </script>";
     } else {
         echo "<script>
         alert('Data Gagal Dihapus')
-        document.location = 'input.php?id=".$_POST['user_id']."';
+        document.location = 'input.php?id=".$_POST['id_pengadaan']."';
     </script>";
     }
 }
@@ -344,4 +343,64 @@ if (isset($_POST['hapus_detail'])) {
     }
 }
 
+
+//PENGADAAN
+
+if (isset($_POST['add_pengadaan'])) {
+    $simpan = mysqli_query($conn, "INSERT INTO pengadaan (id_rawtgj, nama_pengadaan, nama_pembuat, tanggal_dibuat) VALUES 
+    ('$_POST[id_rawtgj]',
+    '$_POST[nama_pengadaan]',
+    '$_POST[nama_pembuat]',
+    '$_POST[tanggal_dibuat]')");
+
+    if ($simpan) {
+        echo "<script>
+                alert('Data Berhasil Disimpan')
+                document.location = 'pengadaan.php';
+            </script>";
+    } else {
+        echo "<script>
+                alert('Penambahan Data Gagal')
+                document.location = 'pengadaan.php';
+            </script>";
+    }
+};
+
+if (isset($_POST['ubah_pengadaan'])) {
+    $ubah = mysqli_query($conn, "UPDATE pengadaan SET
+    nama_pengadaan = '$_POST[nama_pengadaan]',
+    nama_pembuat = '$_POST[nama_pembuat]',
+    tanggal_dibuat = '$_POST[tanggal_dibuat]' WHERE 
+    id_pengadaan = '$_POST[pengadaan]'");
+
+    if ($ubah) {
+        echo "<script>
+        alert('Data Berhasil Diubah')
+        document.location = 'pengadaan.php';
+    </script>";
+    } else {
+        echo "<script>
+        alert('Perubahan Data Gagal')
+        document.location = 'pengadaan.php';
+    </script>";
+    }
+}
+
+if (isset($_POST['hapus_pengadaan'])) {
+    $hapus = mysqli_query($conn, "DELETE FROM pengadaan WHERE id_pengadaan= '$_POST[pengadaan]'");
+
+    if ($hapus) {
+        echo "<script>
+        alert('Data Berhasil Dihapus')
+        document.location = 'pengadaan.php';
+    </script>";
+    } else {
+        echo "<script>
+        alert('Data Gagal Dihapus')
+        document.location = 'pengadaan.php';
+    </script>";
+    }
+}
+
 ?>
+

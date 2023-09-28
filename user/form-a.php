@@ -49,8 +49,10 @@ foreach ($datatest as &$value0) {
         ON compile_output.id_program = program.id_program
       LEFT JOIN kegiatan
         ON compile_output.id_kegiatan = kegiatan.id_kegiatan
+      LEFT JOIN tgj 
+        ON output_user.id_tgj = tgj.id_tgj
     WHERE
-      output_user.id_pengadaan = $id_id
+      output_user.id_tgj = $id_id
   ");
 
   while ($tiap1 = $ambil1->fetch_assoc()) {
@@ -148,7 +150,7 @@ $statement = $koneksi->query("
   FROM
     view_grand_table
   WHERE
-    view_grand_table.id_pengadaan = $id_id
+    view_grand_table.id_tgj = $id_id
   ;
 ");
 $result['Sasaran Strategis'] = $statement->fetch_all(MYSQLI_ASSOC);
@@ -164,7 +166,7 @@ $statement = $koneksi->query("
   FROM
     view_grand_table
   WHERE
-    view_grand_table.id_pengadaan = $id_id
+    view_grand_table.id_tgj = $id_id
   ;
 ");
 $result['IKU'] = $statement->fetch_all(MYSQLI_ASSOC);
@@ -178,7 +180,7 @@ $statement = $koneksi->query("
   FROM
     view_grand_table
   WHERE
-    view_grand_table.id_pengadaan = $id_id
+    view_grand_table.id_tgj = $id_id
   ;
 ");
 while ($result_program = $statement->fetch_assoc()) {
@@ -189,7 +191,7 @@ while ($result_program = $statement->fetch_assoc()) {
     FROM
       view_final_table
     WHERE
-        view_final_table.id_pengadaan = $id_id
+        view_final_table.id_tgj = $id_id
         AND view_final_table.kode_program = '$result_program[kode_program]'
         AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
     ;
@@ -204,7 +206,7 @@ while ($result_program = $statement->fetch_assoc()) {
     FROM
       view_final_table
     WHERE
-        view_final_table.id_pengadaan = $id_id
+        view_final_table.id_tgj = $id_id
         AND view_final_table.kode_program = '$result_program[kode_program]'
         AND view_final_table.alokasi_detail = 'Inisitif Strategis'
     ;
@@ -227,7 +229,7 @@ $statement = $koneksi->query("
   FROM
     view_grand_table
   WHERE
-    view_grand_table.id_pengadaan = $id_id
+    view_grand_table.id_tgj = $id_id
   ;
 ");
 $result['Sasaran Program'] = $statement->fetch_all(MYSQLI_ASSOC);
@@ -243,7 +245,7 @@ $statement = $koneksi->query("
   FROM
     view_grand_table
   WHERE
-    view_grand_table.id_pengadaan = $id_id
+    view_grand_table.id_tgj = $id_id
   ;
 ");
 $result['IKP'] = $statement->fetch_all(MYSQLI_ASSOC);
@@ -257,7 +259,7 @@ $statement = $koneksi->query("
   FROM
     view_grand_table
   WHERE
-    view_grand_table.id_pengadaan = $id_id
+    view_grand_table.id_tgj = $id_id
   ;
 ");
 while ($result_kegiatan = $statement->fetch_assoc()) {
@@ -268,7 +270,7 @@ while ($result_kegiatan = $statement->fetch_assoc()) {
     FROM
       view_final_table
     WHERE
-        view_final_table.id_pengadaan = $id_id
+        view_final_table.id_tgj = $id_id
         AND view_final_table.kode_kegiatan = '$result_kegiatan[kode_kegiatan]'
         AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
     ;
@@ -283,7 +285,7 @@ while ($result_kegiatan = $statement->fetch_assoc()) {
     FROM
       view_final_table
     WHERE
-        view_final_table.id_pengadaan = $id_id
+        view_final_table.id_tgj = $id_id
         AND view_final_table.kode_kegiatan = '$result_kegiatan[kode_kegiatan]'
         AND view_final_table.alokasi_detail = 'Inisitif Strategis'
     ;
@@ -306,7 +308,7 @@ $statement = $koneksi->query("
   FROM
     view_grand_table
   WHERE
-    view_grand_table.id_pengadaan = $id_id
+    view_grand_table.id_tgj = $id_id
   ;
 ");
 $result['Sasaran Kegiatan'] = $statement->fetch_all(MYSQLI_ASSOC);
@@ -322,7 +324,7 @@ $statement = $koneksi->query("
   FROM
     view_grand_table
   WHERE
-    view_grand_table.id_pengadaan = $id_id
+    view_grand_table.id_tgj = $id_id
   ;
 ");
 $result['IKK'] = $statement->fetch_all(MYSQLI_ASSOC);
@@ -339,7 +341,7 @@ $statement = $koneksi->query("
   FROM
     view_grand_table
   WHERE
-    view_grand_table.id_pengadaan = $id_id
+    view_grand_table.id_tgj = $id_id
   ;
 ");
 while ($result_output = $statement->fetch_assoc()) {
@@ -350,7 +352,7 @@ while ($result_output = $statement->fetch_assoc()) {
     FROM
       view_final_table
     WHERE
-        view_final_table.id_pengadaan = $id_id
+        view_final_table.id_tgj = $id_id
         AND view_final_table.kode_output = '$result_output[kode_output]'
         AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
     ;
@@ -365,7 +367,7 @@ while ($result_output = $statement->fetch_assoc()) {
     FROM
       view_final_table
     WHERE
-        view_final_table.id_pengadaan = $id_id
+        view_final_table.id_tgj = $id_id
         AND view_final_table.kode_output = '$result_output[kode_output]'
         AND view_final_table.alokasi_detail = 'Inisitif Strategis'
     ;
@@ -384,7 +386,7 @@ while ($result_output = $statement->fetch_assoc()) {
     FROM
       view_final_table
     WHERE
-      view_final_table.id_pengadaan = $id_id
+      view_final_table.id_tgj = $id_id
       AND view_final_table.kode_output = '$result_output[kode_output]'
     ;
   ");
@@ -399,7 +401,7 @@ while ($result_output = $statement->fetch_assoc()) {
       FROM
         view_final_table
       WHERE
-          view_final_table.id_pengadaan = $id_id
+          view_final_table.id_tgj = $id_id
           AND view_final_table.kode_output = '$result_output[kode_output]'
           AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
           AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
@@ -415,7 +417,7 @@ while ($result_output = $statement->fetch_assoc()) {
       FROM
         view_final_table
       WHERE
-          view_final_table.id_pengadaan = $id_id
+          view_final_table.id_tgj = $id_id
           AND view_final_table.kode_output = '$result_output[kode_output]'
           AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
           AND view_final_table.alokasi_detail = 'Inisitif Strategis'
@@ -435,7 +437,7 @@ while ($result_output = $statement->fetch_assoc()) {
       FROM
         view_final_table
       WHERE
-        view_final_table.id_pengadaan = $id_id
+        view_final_table.id_tgj = $id_id
         AND view_final_table.kode_output = '$result_output[kode_output]'
         AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
       ;
@@ -448,7 +450,7 @@ while ($result_output = $statement->fetch_assoc()) {
         FROM
           view_final_table
         WHERE
-            view_final_table.id_pengadaan = $id_id
+            view_final_table.id_tgj = $id_id
             AND view_final_table.kode_output = '$result_output[kode_output]'
             AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
             AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
@@ -465,7 +467,7 @@ while ($result_output = $statement->fetch_assoc()) {
         FROM
           view_final_table
         WHERE
-            view_final_table.id_pengadaan = $id_id
+            view_final_table.id_tgj = $id_id
             AND view_final_table.kode_output = '$result_output[kode_output]'
             AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
             AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
@@ -486,7 +488,7 @@ while ($result_output = $statement->fetch_assoc()) {
         FROM
           view_final_table
         WHERE
-          view_final_table.id_pengadaan = $id_id
+          view_final_table.id_tgj = $id_id
           AND view_final_table.kode_output = '$result_output[kode_output]'
           AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
           AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
@@ -500,7 +502,7 @@ while ($result_output = $statement->fetch_assoc()) {
           FROM
             view_final_table
           WHERE
-              view_final_table.id_pengadaan = $id_id
+              view_final_table.id_tgj = $id_id
               AND view_final_table.kode_output = '$result_output[kode_output]'
               AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
               AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
@@ -518,7 +520,7 @@ while ($result_output = $statement->fetch_assoc()) {
           FROM
             view_final_table
           WHERE
-              view_final_table.id_pengadaan = $id_id
+              view_final_table.id_tgj = $id_id
               AND view_final_table.kode_output = '$result_output[kode_output]'
               AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
               AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
@@ -552,7 +554,7 @@ while ($result_output = $statement->fetch_assoc()) {
           FROM
             view_final_table
           WHERE
-            view_final_table.id_pengadaan = $id_id
+            view_final_table.id_tgj = $id_id
             AND view_final_table.kode_output = '$result_output[kode_output]'
             AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
             AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
@@ -1051,7 +1053,7 @@ $statement->close();
                       </tr> 
                             <?php
                             $noAkun = 1;
-                            foreach (($result_aktivitas['Akun']?? array()) as &$result_akun):
+                            foreach ($result_aktivitas['Akun'] as &$result_akun):
                             ?> 
                       <tr style="empty-cells: hide">
                         <td style="border-bottom: 1px dashed black; border-left: 1px solid black; border-right: 1px solid black"> <?= $result_akun['kode_akun'] ?> </td>
@@ -1068,7 +1070,7 @@ $statement->close();
                         <td style="border-right: 1px solid black"> <?= number_format($result_akun['total']) ?> </td>
                       </tr> 
                               <?php
-                              foreach (($result_akun['Detail'] ?? array()) as &$result_detail):
+                              foreach ($result_akun['Detail'] as &$result_detail):
                               ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"></td>
