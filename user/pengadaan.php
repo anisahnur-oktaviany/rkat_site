@@ -158,6 +158,7 @@ while ($tiap = $ambil->fetch_assoc()) {
                         <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#modalUbah<?= $no ?>"> Ubah </a>
                         <a href="input.php?id=<?= $row['id_pengadaan'] ?>" class="btn btn-primary"> Input</a>
                         <a href="run.php?id=<?= $row['id_pengadaan'] ?>" class="btn btn-success"> View</a>
+                        <a href="print.php?id=<?= $row['id_pengadaan'] ?>" class="btn btn-success"> Print</a>
                         <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalHapus<?= $no ?>"> Hapus </a>
                       </td>
                     </tr>

@@ -48,6 +48,7 @@
           <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                   <h6 class="collapse-header">Components:</h6>
+                  <a class="collapse-item" href="run.php?id=<?= $row['id_pengadaan'] ?>">Download PDF</a>
                   <a class="collapse-item" href="logout.php">Logout</a>
               </div>
           </div>

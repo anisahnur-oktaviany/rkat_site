@@ -109,436 +109,460 @@ while ($result_sasaran_strategis = $statement->fetch_assoc()) {
   // calculate grand total
   $result_sasaran_strategis['total'] = $result_sasaran_strategis['total_reg'] + $result_sasaran_strategis['total_str'];
 
-  $result['Sasaran Strategis'][] = $result_sasaran_strategis;
-}
-$statement->close();
 
-// Construct IKU
-$statement = $koneksi->query("
-  SELECT DISTINCT
-    view_grand_table.kode_indikatorutama,
-    view_grand_table.nama_indikatorutama,
-    view_grand_table.volume_indikatorutama,
-    view_grand_table.satuan_indikatorutama
-  FROM
-    view_grand_table
-  WHERE
-    view_grand_table.id_pengadaan = $id_id
-  ;
-");
-$result['IKU'] = $statement->fetch_all(MYSQLI_ASSOC);
-$statement->close();
-
-// Construct Program
-$statement = $koneksi->query("
-  SELECT DISTINCT
-    view_grand_table.kode_program,
-    view_grand_table.nama_program
-  FROM
-    view_grand_table
-  WHERE
-    view_grand_table.id_pengadaan = $id_id
-  ;
-");
-while ($result_program = $statement->fetch_assoc()) {
-  // calculate non inisiatif strategis total
-  $sub_statement = $koneksi->query("
-    SELECT
-      SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_reg
-    FROM
-      view_final_table
-    WHERE
-        view_final_table.id_pengadaan = $id_id
-        AND view_final_table.kode_program = '$result_program[kode_program]'
-        AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
-    ;
-  ");
-  $result_program += $sub_statement->fetch_assoc();
-  $sub_statement->close();
-
-  // calculate inisiatif strategis total
-  $sub_statement = $koneksi->query("
-    SELECT
-      SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_str
-    FROM
-      view_final_table
-    WHERE
-        view_final_table.id_pengadaan = $id_id
-        AND view_final_table.kode_program = '$result_program[kode_program]'
-        AND view_final_table.alokasi_detail = 'Inisitif Strategis'
-    ;
-  ");
-  $result_program += $sub_statement->fetch_assoc();
-  $sub_statement->close();
-
-  // calculate grand total
-  $result_program['total'] = $result_program['total_reg'] + $result_program['total_str'];
-
-  $result['Program'][] = $result_program;
-}
-$statement->close();
-
-// Construct Sasaran Program
-$statement = $koneksi->query("
-  SELECT DISTINCT
-    view_grand_table.kode_sasaranprogram,
-    view_grand_table.nama_sasaranprogram
-  FROM
-    view_grand_table
-  WHERE
-    view_grand_table.id_pengadaan = $id_id
-  ;
-");
-$result['Sasaran Program'] = $statement->fetch_all(MYSQLI_ASSOC);
-$statement->close();
-
-// Construct IKP
-$statement = $koneksi->query("
-  SELECT DISTINCT
-    view_grand_table.kode_indikatorprogram,
-    view_grand_table.nama_indikatorprogram,
-    view_grand_table.volume_indikatorprogram,
-    view_grand_table.satuan_indikatorprogram
-  FROM
-    view_grand_table
-  WHERE
-    view_grand_table.id_pengadaan = $id_id
-  ;
-");
-$result['IKP'] = $statement->fetch_all(MYSQLI_ASSOC);
-$statement->close();
-
-// Construct Kegiatan
-$statement = $koneksi->query("
-  SELECT DISTINCT
-    view_grand_table.kode_kegiatan,
-    view_grand_table.nama_kegiatan
-  FROM
-    view_grand_table
-  WHERE
-    view_grand_table.id_pengadaan = $id_id
-  ;
-");
-while ($result_kegiatan = $statement->fetch_assoc()) {
-  // calculate non inisiatif strategis total
-  $sub_statement = $koneksi->query("
-    SELECT
-      SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_reg
-    FROM
-      view_final_table
-    WHERE
-        view_final_table.id_pengadaan = $id_id
-        AND view_final_table.kode_kegiatan = '$result_kegiatan[kode_kegiatan]'
-        AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
-    ;
-  ");
-  $result_kegiatan += $sub_statement->fetch_assoc();
-  $sub_statement->close();
-
-  // calculate inisiatif strategis total
-  $sub_statement = $koneksi->query("
-    SELECT
-      SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_str
-    FROM
-      view_final_table
-    WHERE
-        view_final_table.id_pengadaan = $id_id
-        AND view_final_table.kode_kegiatan = '$result_kegiatan[kode_kegiatan]'
-        AND view_final_table.alokasi_detail = 'Inisitif Strategis'
-    ;
-  ");
-  $result_kegiatan += $sub_statement->fetch_assoc();
-  $sub_statement->close();
-
-  // calculate grand total
-  $result_kegiatan['total'] = $result_kegiatan['total_reg'] + $result_kegiatan['total_str'];
-
-  $result['Kegiatan'][] = $result_kegiatan;
-}
-$statement->close();
-
-// Construct Sasaran Kegiatan
-$statement = $koneksi->query("
-  SELECT DISTINCT
-    view_grand_table.kode_sasarankegiatan,
-    view_grand_table.nama_sasarankegiatan
-  FROM
-    view_grand_table
-  WHERE
-    view_grand_table.id_pengadaan = $id_id
-  ;
-");
-$result['Sasaran Kegiatan'] = $statement->fetch_all(MYSQLI_ASSOC);
-$statement->close();
-
-// Construct IKK
-$statement = $koneksi->query("
-  SELECT DISTINCT
-    view_grand_table.kode_indikatorkegiatan,
-    view_grand_table.nama_indikatorkegiatan,
-    view_grand_table.volume_indikatorkegiatan,
-    view_grand_table.satuan_indikatorkegiatan
-  FROM
-    view_grand_table
-  WHERE
-    view_grand_table.id_pengadaan = $id_id
-  ;
-");
-$result['IKK'] = $statement->fetch_all(MYSQLI_ASSOC);
-$statement->close();
-
-
-// Construct Output
-$statement = $koneksi->query("
-  SELECT DISTINCT
-    view_grand_table.kode_output,
-    view_grand_table.nama_output,
-    view_grand_table.volume_output,
-    view_grand_table.satuan_output
-  FROM
-    view_grand_table
-  WHERE
-    view_grand_table.id_pengadaan = $id_id
-  ;
-");
-while ($result_output = $statement->fetch_assoc()) {
-  // calculate non inisiatif strategis total
-  $sub_statement = $koneksi->query("
-    SELECT
-      SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_reg
-    FROM
-      view_final_table
-    WHERE
-        view_final_table.id_pengadaan = $id_id
-        AND view_final_table.kode_output = '$result_output[kode_output]'
-        AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
-    ;
-  ");
-  $result_output += $sub_statement->fetch_assoc();
-  $sub_statement->close();
-
-  // calculate inisiatif strategis total
-  $sub_statement = $koneksi->query("
-    SELECT
-      SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_str
-    FROM
-      view_final_table
-    WHERE
-        view_final_table.id_pengadaan = $id_id
-        AND view_final_table.kode_output = '$result_output[kode_output]'
-        AND view_final_table.alokasi_detail = 'Inisitif Strategis'
-    ;
-  ");
-  $result_output += $sub_statement->fetch_assoc();
-  $sub_statement->close();
-
-  // calculate grand total
-  $result_output['total'] = $result_output['total_reg'] + $result_output['total_str'];
-
-  // Construct Komponen
-  $sub_statement = $koneksi->query("
+  // Construct IKU
+  $statement_iku = $koneksi->query("
     SELECT DISTINCT
-      view_final_table.kode_komponen,
-      view_final_table.nama_komponen
+      view_grand_table.kode_indikatorutama,
+      view_grand_table.nama_indikatorutama,
+      view_grand_table.volume_indikatorutama,
+      view_grand_table.satuan_indikatorutama
     FROM
-      view_final_table
+      view_grand_table
     WHERE
-      view_final_table.id_pengadaan = $id_id
-      AND view_final_table.kode_output = '$result_output[kode_output]'
+      view_grand_table.id_pengadaan = $id_id
+      AND view_grand_table.kode_sasaranstrategis = $result_sasaran_strategis[kode_sasaranstrategis]
     ;
   ");
-  while ($result_komponen = $sub_statement->fetch_assoc()) {
-    // // handle empty
-    // if (!isset($result_komponen['kode_komponen'])) { continue; }
-
-    // calculate non inisiatif strategis total
-    $sub_sub_statement = $koneksi->query("
-      SELECT
-        SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_reg
-      FROM
-        view_final_table
-      WHERE
-          view_final_table.id_pengadaan = $id_id
-          AND view_final_table.kode_output = '$result_output[kode_output]'
-          AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
-          AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
-      ;
-    ");
-    $result_komponen += $sub_sub_statement->fetch_assoc();
-    $sub_sub_statement->close();
-  
-    // calculate inisiatif strategis total
-    $sub_sub_statement = $koneksi->query("
-      SELECT
-        SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_str
-      FROM
-        view_final_table
-      WHERE
-          view_final_table.id_pengadaan = $id_id
-          AND view_final_table.kode_output = '$result_output[kode_output]'
-          AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
-          AND view_final_table.alokasi_detail = 'Inisitif Strategis'
-      ;
-    ");
-    $result_komponen += $sub_sub_statement->fetch_assoc();
-    $sub_sub_statement->close();
-  
-    // calculate grand total
-    $result_komponen['total'] = $result_komponen['total_reg'] + $result_komponen['total_str'];
-  
-    // Construct Aktivitas
-    $sub_sub_statement = $koneksi->query("
+  while ($result_iku = $statement_iku->fetch_assoc()) {
+    // Construct Program
+    $statement_program = $koneksi->query("
       SELECT DISTINCT
-        view_final_table.kode_aktivitas,
-        view_final_table.nama_aktivitas
+        view_grand_table.kode_program,
+        view_grand_table.nama_program
       FROM
-        view_final_table
+        view_grand_table
       WHERE
-        view_final_table.id_pengadaan = $id_id
-        AND view_final_table.kode_output = '$result_output[kode_output]'
-        AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
+        view_grand_table.id_pengadaan = $id_id
+        AND view_grand_table.kode_indikatorutama = '$result_iku[kode_indikatorutama]'
       ;
     ");
-    while ($result_aktivitas = $sub_sub_statement->fetch_assoc()) {
+    while ($result_program = $statement_program->fetch_assoc()) {
       // calculate non inisiatif strategis total
-      $sub_sub_sub_statement = $koneksi->query("
+      $sub_statement_program = $koneksi->query("
         SELECT
           SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_reg
         FROM
           view_final_table
         WHERE
             view_final_table.id_pengadaan = $id_id
-            AND view_final_table.kode_output = '$result_output[kode_output]'
-            AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
-            AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
+            AND view_final_table.kode_program = '$result_program[kode_program]'
             AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
         ;
       ");
-      $result_aktivitas += $sub_sub_sub_statement->fetch_assoc();
-      $sub_sub_sub_statement->close();
-    
+      $result_program += $sub_statement_program->fetch_assoc();
+      $sub_statement_program->close();
+
       // calculate inisiatif strategis total
-      $sub_sub_sub_statement = $koneksi->query("
+      $sub_statement_program = $koneksi->query("
         SELECT
           SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_str
         FROM
           view_final_table
         WHERE
             view_final_table.id_pengadaan = $id_id
-            AND view_final_table.kode_output = '$result_output[kode_output]'
-            AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
-            AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
+            AND view_final_table.kode_program = '$result_program[kode_program]'
             AND view_final_table.alokasi_detail = 'Inisitif Strategis'
         ;
       ");
-      $result_aktivitas += $sub_sub_sub_statement->fetch_assoc();
-      $sub_sub_sub_statement->close();
-    
+      $result_program += $sub_statement_program->fetch_assoc();
+      $sub_statement_program->close();
+
       // calculate grand total
-      $result_aktivitas['total'] = $result_aktivitas['total_reg'] + $result_aktivitas['total_str'];
-    
-      // Construct Akun
-      $sub_sub_sub_statement = $koneksi->query("
+      $result_program['total'] = $result_program['total_reg'] + $result_program['total_str'];
+
+      // Construct Sasaran Program
+      $statement_sasaran_program = $koneksi->query("
         SELECT DISTINCT
-          view_final_table.kode_akun,
-          view_final_table.nama_akun
+          view_grand_table.kode_sasaranprogram,
+          view_grand_table.nama_sasaranprogram
         FROM
-          view_final_table
+          view_grand_table
         WHERE
-          view_final_table.id_pengadaan = $id_id
-          AND view_final_table.kode_output = '$result_output[kode_output]'
-          AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
-          AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
+          view_grand_table.id_pengadaan = $id_id
+          AND view_grand_table.kode_program = '$result_program[kode_program]'
         ;
       ");
-      while ($result_akun = $sub_sub_sub_statement->fetch_assoc()) {
-        // calculate non inisiatif strategis total
-        $sub_sub_sub_sub_statement = $koneksi->query("
-          SELECT
-            SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_reg
-          FROM
-            view_final_table
-          WHERE
-              view_final_table.id_pengadaan = $id_id
-              AND view_final_table.kode_output = '$result_output[kode_output]'
-              AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
-              AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
-              AND view_final_table.kode_akun = '$result_akun[kode_akun]'
-              AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
-          ;
-        ");
-        $result_akun += $sub_sub_sub_sub_statement->fetch_assoc();
-        $sub_sub_sub_sub_statement->close();
-      
-        // calculate inisiatif strategis total
-        $sub_sub_sub_sub_statement = $koneksi->query("
-          SELECT
-            SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_str
-          FROM
-            view_final_table
-          WHERE
-              view_final_table.id_pengadaan = $id_id
-              AND view_final_table.kode_output = '$result_output[kode_output]'
-              AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
-              AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
-              AND view_final_table.kode_akun = '$result_akun[kode_akun]'
-              AND view_final_table.alokasi_detail = 'Inisitif Strategis'
-          ;
-        ");
-        $result_akun += $sub_sub_sub_sub_statement->fetch_assoc();
-        $sub_sub_sub_sub_statement->close();
-      
-        // calculate grand total
-        $result_akun['total'] = $result_akun['total_reg'] + $result_akun['total_str'];
-      
-        // Construct Detail
-        $sub_sub_sub_sub_statement = $koneksi->query("
-          SELECT
-            view_final_table.nama_detail,
-            view_final_table.volume_detail,
-            view_final_table.satuan_detail,
-            view_final_table.harga_detail,
-            IF(
-              view_final_table.alokasi_detail = 'Non Inisitif Strategis',
-              view_final_table.volume_detail * view_final_table.harga_detail,
-              0
-            ) AS total_reg,
-            IF(
-              view_final_table.alokasi_detail = 'Inisitif Strategis',
-              view_final_table.volume_detail * view_final_table.harga_detail,
-              0
-            ) AS total_str
-          FROM
-            view_final_table
-          WHERE
-            view_final_table.id_pengadaan = $id_id
-            AND view_final_table.kode_output = '$result_output[kode_output]'
-            AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
-            AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
-            AND view_final_table.kode_akun = '$result_akun[kode_akun]'
-          ;
-        ");
-        while ($result_detail = $sub_sub_sub_sub_statement->fetch_assoc()) {
-          // calculate grand total
-          $result_detail['total'] = $result_detail['total_reg'] + $result_detail['total_str'];
 
-          $result_akun['Detail'][] = $result_detail;
+      while ($result_sasaran_program = $statement_sasaran_program->fetch_assoc()) {
+        // Construct IKP
+        $statement_ikp = $koneksi->query("
+          SELECT DISTINCT
+            view_grand_table.kode_indikatorprogram,
+            view_grand_table.nama_indikatorprogram,
+            view_grand_table.volume_indikatorprogram,
+            view_grand_table.satuan_indikatorprogram
+          FROM
+            view_grand_table
+          WHERE
+            view_grand_table.id_pengadaan = $id_id
+            AND view_grand_table.kode_sasaranprogram = '$result_sasaran_program[kode_sasaranprogram]'
+          ;
+        ");
+
+        while ($result_ikp = $statement_ikp->fetch_assoc()) {
+          // Construct Kegiatan
+          $statement_kegiatan = $koneksi->query("
+            SELECT DISTINCT
+              view_grand_table.kode_kegiatan,
+              view_grand_table.nama_kegiatan
+            FROM
+              view_grand_table
+            WHERE
+              view_grand_table.id_pengadaan = $id_id
+              AND view_grand_table.kode_indikatorprogram = '$result_ikp[kode_indikatorprogram]'
+            ;
+          ");
+
+          while ($result_kegiatan = $statement_kegiatan->fetch_assoc()) {
+            // calculate non inisiatif strategis total
+            $sub_statement_kegiatan = $koneksi->query("
+              SELECT
+                SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_reg
+              FROM
+                view_final_table
+              WHERE
+                  view_final_table.id_pengadaan = $id_id
+                  AND view_final_table.kode_kegiatan = '$result_kegiatan[kode_kegiatan]'
+                  AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
+              ;
+            ");
+            $result_kegiatan += $sub_statement_kegiatan->fetch_assoc();
+            $sub_statement_kegiatan->close();
+
+            // calculate inisiatif strategis total
+            $sub_statement_kegiatan = $koneksi->query("
+              SELECT
+                SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_str
+              FROM
+                view_final_table
+              WHERE
+                  view_final_table.id_pengadaan = $id_id
+                  AND view_final_table.kode_kegiatan = '$result_kegiatan[kode_kegiatan]'
+                  AND view_final_table.alokasi_detail = 'Inisitif Strategis'
+              ;
+            ");
+            $result_kegiatan += $sub_statement_kegiatan->fetch_assoc();
+            $sub_statement_kegiatan->close();
+
+            // calculate grand total
+            $result_kegiatan['total'] = $result_kegiatan['total_reg'] + $result_kegiatan['total_str'];
+
+            // Construct Sasaran Kegiatan
+            $statement_sasaran_kegiatan = $koneksi->query("
+              SELECT DISTINCT
+                view_grand_table.kode_sasarankegiatan,
+                view_grand_table.nama_sasarankegiatan
+              FROM
+                view_grand_table
+              WHERE
+                view_grand_table.id_pengadaan = $id_id
+                AND view_grand_table.kode_kegiatan = '$result_kegiatan[kode_kegiatan]'
+              ;
+            ");
+
+            while ($result_sasaran_kegiatan = $statement_sasaran_kegiatan->fetch_assoc()) {
+              // Construct IKK
+              $statement_ikk = $koneksi->query("
+                SELECT DISTINCT
+                  view_grand_table.kode_indikatorkegiatan,
+                  view_grand_table.nama_indikatorkegiatan,
+                  view_grand_table.volume_indikatorkegiatan,
+                  view_grand_table.satuan_indikatorkegiatan
+                FROM
+                  view_grand_table
+                WHERE
+                  view_grand_table.id_pengadaan = $id_id
+                  AND view_grand_table.kode_sasarankegiatan = '$result_sasaran_kegiatan[kode_sasarankegiatan]'
+                ;
+              ");
+
+              while ($result_ikk = $statement_ikk->fetch_assoc()) {
+                // Construct Output
+                $statement_output = $koneksi->query("
+                  SELECT DISTINCT
+                    view_grand_table.kode_output,
+                    view_grand_table.nama_output,
+                    view_grand_table.volume_output,
+                    view_grand_table.satuan_output
+                  FROM
+                    view_grand_table
+                  WHERE
+                    view_grand_table.id_pengadaan = $id_id
+                    AND view_grand_table.kode_indikatorkegiatan = '$result_ikk[kode_indikatorkegiatan]'
+                  ;
+                ");
+                while ($result_output = $statement_output->fetch_assoc()) {
+                  // calculate non inisiatif strategis total
+                  $sub_statement_output = $koneksi->query("
+                    SELECT
+                      SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_reg
+                    FROM
+                      view_final_table
+                    WHERE
+                        view_final_table.id_pengadaan = $id_id
+                        AND view_final_table.kode_output = '$result_output[kode_output]'
+                        AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
+                    ;
+                  ");
+                  $result_output += $sub_statement_output->fetch_assoc();
+                  $sub_statement_output->close();
+
+                  // calculate inisiatif strategis total
+                  $sub_statement_output = $koneksi->query("
+                    SELECT
+                      SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_str
+                    FROM
+                      view_final_table
+                    WHERE
+                        view_final_table.id_pengadaan = $id_id
+                        AND view_final_table.kode_output = '$result_output[kode_output]'
+                        AND view_final_table.alokasi_detail = 'Inisitif Strategis'
+                    ;
+                  ");
+                  $result_output += $sub_statement_output->fetch_assoc();
+                  $sub_statement_output->close();
+
+                  // calculate grand total
+                  $result_output['total'] = $result_output['total_reg'] + $result_output['total_str'];
+
+                  // Construct Komponen
+                  $statement_komponen = $koneksi->query("
+                    SELECT DISTINCT
+                      view_final_table.kode_komponen,
+                      view_final_table.nama_komponen
+                    FROM
+                      view_final_table
+                    WHERE
+                      view_final_table.id_pengadaan = $id_id
+                      AND view_final_table.kode_output = '$result_output[kode_output]'
+                    ;
+                  ");
+                  while ($result_komponen = $statement_komponen->fetch_assoc()) {
+                    // // handle empty
+                    // if (!isset($result_komponen['kode_komponen'])) { continue; }
+
+                    // calculate non inisiatif strategis total
+                    $sub_statement_komponen = $koneksi->query("
+                      SELECT
+                        SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_reg
+                      FROM
+                        view_final_table
+                      WHERE
+                          view_final_table.id_pengadaan = $id_id
+                          AND view_final_table.kode_output = '$result_output[kode_output]'
+                          AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
+                          AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
+                      ;
+                    ");
+                    $result_komponen += $sub_statement_komponen->fetch_assoc();
+                    $sub_statement_komponen->close();
+                  
+                    // calculate inisiatif strategis total
+                    $sub_statement_komponen = $koneksi->query("
+                      SELECT
+                        SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_str
+                      FROM
+                        view_final_table
+                      WHERE
+                          view_final_table.id_pengadaan = $id_id
+                          AND view_final_table.kode_output = '$result_output[kode_output]'
+                          AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
+                          AND view_final_table.alokasi_detail = 'Inisitif Strategis'
+                      ;
+                    ");
+                    $result_komponen += $sub_statement_komponen->fetch_assoc();
+                    $sub_statement_komponen->close();
+                  
+                    // calculate grand total
+                    $result_komponen['total'] = $result_komponen['total_reg'] + $result_komponen['total_str'];
+                  
+                    // Construct Aktivitas
+                    $statement_aktivitas = $koneksi->query("
+                      SELECT DISTINCT
+                        view_final_table.kode_aktivitas,
+                        view_final_table.nama_aktivitas
+                      FROM
+                        view_final_table
+                      WHERE
+                        view_final_table.id_pengadaan = $id_id
+                        AND view_final_table.kode_output = '$result_output[kode_output]'
+                        AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
+                      ;
+                    ");
+                    while ($result_aktivitas = $statement_aktivitas->fetch_assoc()) {
+                      // calculate non inisiatif strategis total
+                      $sub_statement_aktivitas = $koneksi->query("
+                        SELECT
+                          SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_reg
+                        FROM
+                          view_final_table
+                        WHERE
+                            view_final_table.id_pengadaan = $id_id
+                            AND view_final_table.kode_output = '$result_output[kode_output]'
+                            AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
+                            AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
+                            AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
+                        ;
+                      ");
+                      $result_aktivitas += $sub_statement_aktivitas->fetch_assoc();
+                      $sub_statement_aktivitas->close();
+                    
+                      // calculate inisiatif strategis total
+                      $sub_statement_aktivitas = $koneksi->query("
+                        SELECT
+                          SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_str
+                        FROM
+                          view_final_table
+                        WHERE
+                            view_final_table.id_pengadaan = $id_id
+                            AND view_final_table.kode_output = '$result_output[kode_output]'
+                            AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
+                            AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
+                            AND view_final_table.alokasi_detail = 'Inisitif Strategis'
+                        ;
+                      ");
+                      $result_aktivitas += $sub_statement_aktivitas->fetch_assoc();
+                      $sub_statement_aktivitas->close();
+                    
+                      // calculate grand total
+                      $result_aktivitas['total'] = $result_aktivitas['total_reg'] + $result_aktivitas['total_str'];
+                    
+                      // Construct Akun
+                      $statement_akun = $koneksi->query("
+                        SELECT DISTINCT
+                          view_final_table.kode_akun,
+                          view_final_table.nama_akun
+                        FROM
+                          view_final_table
+                        WHERE
+                          view_final_table.id_pengadaan = $id_id
+                          AND view_final_table.kode_output = '$result_output[kode_output]'
+                          AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
+                          AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
+                        ;
+                      ");
+                      while ($result_akun = $statement_akun->fetch_assoc()) {
+                        // calculate non inisiatif strategis total
+                        $sub_statement_akun = $koneksi->query("
+                          SELECT
+                            SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_reg
+                          FROM
+                            view_final_table
+                          WHERE
+                              view_final_table.id_pengadaan = $id_id
+                              AND view_final_table.kode_output = '$result_output[kode_output]'
+                              AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
+                              AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
+                              AND view_final_table.kode_akun = '$result_akun[kode_akun]'
+                              AND view_final_table.alokasi_detail = 'Non Inisitif Strategis'
+                          ;
+                        ");
+                        $result_akun += $sub_statement_akun->fetch_assoc();
+                        $sub_statement_akun->close();
+                      
+                        // calculate inisiatif strategis total
+                        $sub_statement_akun = $koneksi->query("
+                          SELECT
+                            SUM(view_final_table.volume_detail * view_final_table.harga_detail) AS total_str
+                          FROM
+                            view_final_table
+                          WHERE
+                              view_final_table.id_pengadaan = $id_id
+                              AND view_final_table.kode_output = '$result_output[kode_output]'
+                              AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
+                              AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
+                              AND view_final_table.kode_akun = '$result_akun[kode_akun]'
+                              AND view_final_table.alokasi_detail = 'Inisitif Strategis'
+                          ;
+                        ");
+                        $result_akun += $sub_statement_akun->fetch_assoc();
+                        $sub_statement_akun->close();
+                      
+                        // calculate grand total
+                        $result_akun['total'] = $result_akun['total_reg'] + $result_akun['total_str'];
+                      
+                        // Construct Detail
+                        $statement_detail = $koneksi->query("
+                          SELECT
+                            view_final_table.nama_detail,
+                            view_final_table.volume_detail,
+                            view_final_table.satuan_detail,
+                            view_final_table.harga_detail,
+                            IF(
+                              view_final_table.alokasi_detail = 'Non Inisitif Strategis',
+                              view_final_table.volume_detail * view_final_table.harga_detail,
+                              0
+                            ) AS total_reg,
+                            IF(
+                              view_final_table.alokasi_detail = 'Inisitif Strategis',
+                              view_final_table.volume_detail * view_final_table.harga_detail,
+                              0
+                            ) AS total_str
+                          FROM
+                            view_final_table
+                          WHERE
+                            view_final_table.id_pengadaan = $id_id
+                            AND view_final_table.kode_output = '$result_output[kode_output]'
+                            AND view_final_table.kode_komponen = '$result_komponen[kode_komponen]'
+                            AND view_final_table.kode_aktivitas = '$result_aktivitas[kode_aktivitas]'
+                            AND view_final_table.kode_akun = '$result_akun[kode_akun]'
+                          ;
+                        ");
+                        while ($result_detail = $statement_detail->fetch_assoc()) {
+                          // calculate grand total
+                          $result_detail['total'] = $result_detail['total_reg'] + $result_detail['total_str'];
+
+                          $result_akun['Detail'][] = $result_detail;
+                        }
+                        $statement_detail->close();
+                      
+                        $result_aktivitas['Akun'][] = $result_akun;
+                      }
+                      $statement_akun->close();
+                    
+                      $result_komponen['Aktivitas'][] = $result_aktivitas;
+                    }
+                    $statement_aktivitas->close();
+                  
+                    $result_output['Komponen'][] = $result_komponen;
+                  }
+                  $statement_komponen->close();
+
+                  $result_ikk['Output'][] = $result_output;
+                }
+                $statement_output->close();
+
+
+                $result_sasaran_kegiatan['IKK'][] = $result_ikk;
+              }
+              $statement_ikk->close();
+
+              $result_kegiatan['Sasaran Kegiatan'][] = $result_sasaran_kegiatan;
+            }
+            $statement_sasaran_kegiatan->close();
+
+            $result_ikp['Kegiatan'][] = $result_kegiatan;
+          }
+          $statement_kegiatan->close();
+
+          $result_sasaran_program['IKP'][] = $result_ikp;
         }
-        $sub_sub_sub_sub_statement->close();
-      
-        $result_aktivitas['Akun'][] = $result_akun;
-      }
-      $sub_sub_sub_statement->close();
-    
-      $result_komponen['Aktivitas'][] = $result_aktivitas;
-    }
-    $sub_sub_statement->close();
-  
-    $result_output['Komponen'][] = $result_komponen;
-  }
-  $sub_statement->close();
+        $statement_ikp->close();
 
-  $result['Output'][] = $result_output;
+        $result_program['Sasaran Program'][] = $result_sasaran_program;
+      }
+      $statement_sasaran_program->close();
+
+      $result_iku['Program'][] = $result_program;
+    }
+    $statement_program->close();
+
+    $result_sasaran_strategis['IKU'][] = $result_iku;
+  }
+  $statement_iku->close();
+
+  $result['Sasaran Strategis'][] = $result_sasaran_strategis;
 }
 $statement->close();
 // MARK END: NEW METHOD
@@ -818,13 +842,10 @@ $statement->close();
                         <td style="border-right: 1px solid black"> <?= number_format($result_sasaran_strategis['total_reg']) ?> </td>
                         <td style="border-right: 1px solid black"> <?= number_format($result_sasaran_strategis['total_str']) ?> </td>
                         <td style="border-right: 1px solid black"> <?= number_format($result_sasaran_strategis['total']) ?> </td>
-                      <?php  
-                      endforeach;
-                      ?>
 
                       <?php
-                      $noIKU = 1;
-                      foreach ($result['IKU'] as &$result_iku):
+                        $noIKU = 1;
+                        foreach($result_sasaran_strategis['IKU'] as $result_iku):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_iku['kode_indikatorutama'] ?> </td>
@@ -832,7 +853,7 @@ $statement->close();
                           <b>IKU <?= $noIKU++ ?>:</b>
                           <br> <?= $result_iku['nama_indikatorutama'] ?>
                         </td>
-                        <td style="border-right: 1px solid black"> <?= number_format($result_iku['volume_indikatorutama']) ?> </td>
+                        <td style="border-right: 1px solid black"><?= number_format($result_iku['volume_indikatorutama']) ?></td>
                         <td style="border-right: 1px solid black"><?= $result_iku['satuan_indikatorutama'] ?></td>
                         <td style="border-right: 1px solid black"></td>                      
                         <td style="border-right: 1px solid black"></td>
@@ -840,12 +861,8 @@ $statement->close();
                         <td style="border-right: 1px solid black"></td>
                       </tr>
                       <?php
-                      endforeach;
-                      ?>
-
-                      <?php
-                      $noProgram = 1;
-                      foreach ($result['Program'] as &$result_program):
+                          $noProgram = 1;
+                          foreach ($result_iku['Program'] as &$result_program):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_program['kode_program'] ?> </td>
@@ -862,12 +879,8 @@ $statement->close();
                         <td style="border-right: 1px solid black"> <?= number_format($result_program['total']) ?> </td>
                       </tr>
                       <?php
-                      endforeach;
-                      ?>
-
-                      <?php
-                      $noSaspro = 1;
-                      foreach ($result['Sasaran Program'] as &$result_sasaran_program):
+                            $noSaspro = 1;
+                            foreach ($result_program['Sasaran Program'] as &$result_sasaran_program):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_sasaran_program['kode_sasaranprogram'] ?> </td>
@@ -884,11 +897,8 @@ $statement->close();
                         <td style="border-right: 1px solid black"></td>
                       </tr>
                       <?php
-                      endforeach;
-                      ?>
-                      <?php
-                      $noIKP = 1;
-                      foreach ($result['IKP'] as &$result_ikp):
+                              $noIKP = 1;
+                              foreach ($result_sasaran_program['IKP'] as &$result_ikp):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_ikp['kode_indikatorprogram'] ?> </td>
@@ -905,11 +915,8 @@ $statement->close();
                         <td style="border-right: 1px solid black"></td>
                       </tr>
                       <?php
-                      endforeach;
-                      ?>
-                      <?php
-                      $noKegiatan = 1;
-                      foreach ($result['Kegiatan'] as &$result_kegiatan):
+                                $noKegiatan = 1;
+                                foreach ($result_ikp['Kegiatan'] as &$result_kegiatan):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_kegiatan['kode_kegiatan'] ?> </td>
@@ -926,11 +933,8 @@ $statement->close();
                         <td style="border-right: 1px solid black"> <?= number_format($result_kegiatan['total']) ?> </td>
                       </tr>
                       <?php
-                      endforeach;
-                      ?>
-                      <?php
-                      $noSasgik = 1;
-                      foreach ($result['Sasaran Kegiatan'] as &$result_sasaran_kegiatan):
+                                  $noSasgik = 1;
+                                  foreach ($result_kegiatan['Sasaran Kegiatan'] as &$result_sasaran_kegiatan):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_sasaran_kegiatan['kode_sasarankegiatan'] ?> </td>
@@ -947,11 +951,8 @@ $statement->close();
                         <td style="border-right: 1px solid black"></td>
                       </tr>
                       <?php
-                      endforeach;
-                      ?>
-                      <?php
-                      $noIndgik = 1;
-                      foreach ($result['IKK'] as &$result_ikk):
+                                    $noIndgik = 1;
+                                    foreach ($result_sasaran_kegiatan['IKK'] as &$result_ikk):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_ikk['kode_indikatorkegiatan'] ?> </td>
@@ -968,12 +969,8 @@ $statement->close();
                         <td style="border-right: 1px solid black"></td>
                       </tr>
                       <?php
-                      endforeach;
-                      ?>
-
-                      <?php
                       $noOutput = 1;
-                      foreach ($result['Output'] as &$result_output):
+                      foreach ($result_ikk['Output'] as &$result_output):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_output['kode_output'] ?> </td>
@@ -1062,6 +1059,29 @@ $statement->close();
                         endforeach;
                       endforeach;
                       ?>
+                      <?php
+                                    endforeach;
+                                  endforeach;
+                                endforeach;
+                              endforeach;
+                            endforeach;
+                          endforeach;
+                        endforeach;
+                      ?>
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                      
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                      </tr>
+                      <?php
+                      endforeach;
+                      ?>
                     </tbody>
                   </table>
                   <script>
@@ -1077,8 +1097,8 @@ $statement->close();
             <br>
             <div class="card shadow mb-10">
               <div class="card-body" style="overflow-x: auto">
-                <div id="divTableDataHolder2">
-                <table id="example-table" class="table table-bordered" style="width: 100%">
+                <div id="divTableDataHolder">
+                  <table id="example-table" class="table table-bordered" style="width: 100%">
                     <thead>
                       <tr>
                         <th colspan="2" style="text-align: center; border: 1px solid black">FORMULIR B</th>
@@ -1116,7 +1136,7 @@ $statement->close();
                     <tbody>
                     <?php
                       $noSasgis = 1;
-                      foreach ($result['Sasaran Strategis'] as &$result_sasaran_strategis):          
+                      foreach ($result['Pengadaan'] as &$result_pengadaan):          
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"></td>
@@ -1124,9 +1144,9 @@ $statement->close();
                         <td style="border-right: 1px solid black"></td>
                         <td style="border-right: 1px solid black"></td>
                         <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_pengadaan['total_reg']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_pengadaan['total_str']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_pengadaan['total']) ?> </td>
                       <?php
                       endforeach;
                       ?>
@@ -1147,13 +1167,10 @@ $statement->close();
                         <td style="border-right: 1px solid black"> <?= number_format($result_sasaran_strategis['total_reg']) ?> </td>
                         <td style="border-right: 1px solid black"> <?= number_format($result_sasaran_strategis['total_str']) ?> </td>
                         <td style="border-right: 1px solid black"> <?= number_format($result_sasaran_strategis['total']) ?> </td>
-                      <?php  
-                      endforeach;
-                      ?>
 
                       <?php
-                      $noIKU = 1;
-                      foreach ($result['IKU'] as &$result_iku):
+                        $noIKU = 1;
+                        foreach($result_sasaran_strategis['IKU'] as $result_iku):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_iku['kode_indikatorutama'] ?> </td>
@@ -1161,20 +1178,16 @@ $statement->close();
                           <b>IKU <?= $noIKU++ ?>:</b>
                           <br> <?= $result_iku['nama_indikatorutama'] ?>
                         </td>
-                        <td style="border-right: 1px solid black"> <?= number_format($result_iku['volume_indikatorutama']) ?> </td>
+                        <td style="border-right: 1px solid black"><?= number_format($result_iku['volume_indikatorutama']) ?></td>
                         <td style="border-right: 1px solid black"><?= $result_iku['satuan_indikatorutama'] ?></td>
-                        <td style="border-right: 1px solid black"></td>
-                       
+                        <td style="border-right: 1px solid black"></td>                      
                         <td style="border-right: 1px solid black"></td>
                         <td style="border-right: 1px solid black"></td>
                         <td style="border-right: 1px solid black"></td>
                       </tr>
                       <?php
-                      endforeach;
-                      ?>
-                      <?php
-                      $noProgram = 1;
-                      foreach ($result['Program'] as &$result_program):
+                          $noProgram = 1;
+                          foreach ($result_iku['Program'] as &$result_program):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_program['kode_program'] ?> </td>
@@ -1191,11 +1204,8 @@ $statement->close();
                         <td style="border-right: 1px solid black"> <?= number_format($result_program['total']) ?> </td>
                       </tr>
                       <?php
-                      endforeach;
-                      ?>
-                      <?php
-                      $noSaspro = 1;
-                      foreach ($result['Sasaran Program'] as &$result_sasaran_program):
+                            $noSaspro = 1;
+                            foreach ($result_program['Sasaran Program'] as &$result_sasaran_program):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_sasaran_program['kode_sasaranprogram'] ?> </td>
@@ -1212,11 +1222,8 @@ $statement->close();
                         <td style="border-right: 1px solid black"></td>
                       </tr>
                       <?php
-                      endforeach;
-                      ?>
-                      <?php
-                      $noIKP = 1;
-                      foreach ($result['IKP'] as &$result_ikp):
+                              $noIKP = 1;
+                              foreach ($result_sasaran_program['IKP'] as &$result_ikp):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_ikp['kode_indikatorprogram'] ?> </td>
@@ -1233,11 +1240,8 @@ $statement->close();
                         <td style="border-right: 1px solid black"></td>
                       </tr>
                       <?php
-                      endforeach;
-                      ?>
-                      <?php
-                      $noKegiatan = 1;
-                      foreach ($result['Kegiatan'] as &$result_kegiatan):
+                                $noKegiatan = 1;
+                                foreach ($result_ikp['Kegiatan'] as &$result_kegiatan):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_kegiatan['kode_kegiatan'] ?> </td>
@@ -1254,11 +1258,8 @@ $statement->close();
                         <td style="border-right: 1px solid black"> <?= number_format($result_kegiatan['total']) ?> </td>
                       </tr>
                       <?php
-                      endforeach;
-                      ?>
-                      <?php
-                      $noSasgik = 1;
-                      foreach ($result['Sasaran Kegiatan'] as &$result_sasaran_kegiatan):
+                                  $noSasgik = 1;
+                                  foreach ($result_kegiatan['Sasaran Kegiatan'] as &$result_sasaran_kegiatan):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_sasaran_kegiatan['kode_sasarankegiatan'] ?> </td>
@@ -1275,11 +1276,8 @@ $statement->close();
                         <td style="border-right: 1px solid black"></td>
                       </tr>
                       <?php
-                      endforeach;
-                      ?>
-                      <?php
-                      $noIndgik = 1;
-                      foreach ($result['IKK'] as &$result_ikk):
+                                    $noIndgik = 1;
+                                    foreach ($result_sasaran_kegiatan['IKK'] as &$result_ikk):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_ikk['kode_indikatorkegiatan'] ?> </td>
@@ -1296,12 +1294,8 @@ $statement->close();
                         <td style="border-right: 1px solid black"></td>
                       </tr>
                       <?php
-                      endforeach;
-                      ?>
-
-                      <?php
                       $noOutput = 1;
-                      foreach ($result['Output'] as &$result_output):
+                      foreach ($result_ikk['Output'] as &$result_output):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_output['kode_output'] ?> </td>
@@ -1311,32 +1305,126 @@ $statement->close();
                         </td>
                         <td style="border-right: 1px solid black"> <?= number_format($result_output['volume_output']) ?> </td>
                         <td style="border-right: 1px solid black"> <?= $result_output['satuan_output'] ?> </td>
-                        <td style="border-right: 1px solid black"></td>
-                     
+                        <td style="border-right: 1px solid black"></td>                  
                         <td style="border-right: 1px solid black"> <?= number_format($result_output['total_reg']) ?> </td>
                         <td style="border-right: 1px solid black"> <?= number_format($result_output['total_str']) ?> </td>
                         <td style="border-right: 1px solid black"> <?= number_format($result_output['total']) ?> </td>
-                      </tr>                     
+                      </tr>
+                        <?php
+                        $noKomponen = 1;
+                        foreach (($result_output['Komponen'] ?? array()) as &$result_komponen):
+                        ?>
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_komponen['kode_komponen'] ?> </td>
+                        <td style="border-right: 1px solid black">
+                          <b>&nbsp;&nbsp;Komponen <?= $noKomponen++ ?>: </b>
+                          <br>&nbsp;&nbsp;<?= $result_komponen['nama_komponen'] ?>
+                        </td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                       
+                        <td style="border-right: 1px solid black"> <?= number_format($result_komponen['total_reg']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_komponen['total_str']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_komponen['total'])?> </td>
+                      </tr> 
+                          <?php
+                          $noAktivitas = 1;
+                          foreach (($result_komponen['Aktivitas'] ?? array()) as &$result_aktivitas):
+                          ?> 
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_aktivitas['kode_aktivitas'] ?> </td>
+                        <td style="border-right: 1px solid black">
+                          <b>&nbsp;&nbsp;&nbsp;&nbsp;Aktifitas <?= $noAktivitas++ ?>: </b>
+                          <br>&nbsp;&nbsp;&nbsp;&nbsp;<?= $result_aktivitas['nama_aktivitas'] ?>
+                        </td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>                  
+                        <td style="border-right: 1px solid black"> <?= number_format($result_aktivitas['total_reg']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_aktivitas['total_str']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_aktivitas['total'])?> </td>
+                      </tr> 
+                            <?php
+                            $noAkun = 1;
+                            foreach (($result_aktivitas['Akun']?? array()) as &$result_akun):
+                            ?> 
+                      <tr style="empty-cells: hide">
+                        <td style="border-bottom: 1px dashed black; border-left: 1px solid black; border-right: 1px solid black"> <?= $result_akun['kode_akun'] ?> </td>
+                        <td style="border-bottom: 1px dashed black; border-right: 1px solid black">
+                          <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Akun <?= $noAkun++ ?>: </b>
+                          <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $result_akun['nama_akun'] ?>
+                        </td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        
+                        <td style="border-right: 1px solid black"> <?= number_format($result_akun['total_reg']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_akun['total_str']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_akun['total']) ?> </td>
+                      </tr> 
+                              <?php
+                              foreach (($result_akun['Detail'] ?? array()) as &$result_detail):
+                              ?>
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $result_detail['nama_detail'] ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_detail['volume_detail']) ?> </td>
+                     
+                        <td style="border-right: 1px solid black"> <?= $result_detail['satuan_detail'] ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_detail['harga_detail']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_detail['total_reg']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_detail['total_str']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_detail['total']) ?> </td>
+                      </tr>
                       <?php
                               endforeach;
+                            endforeach;
+                          endforeach;
+                        endforeach;
+                      endforeach;
+                      ?>
+                      <?php
+                                    endforeach;
+                                  endforeach;
+                                endforeach;
+                              endforeach;
+                            endforeach;
+                          endforeach;
+                        endforeach;
+                      ?>
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                      
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                      </tr>
+                      <?php
+                      endforeach;
                       ?>
                     </tbody>
                   </table>
-                <script>
-                    $('[id$=downloadexcel2]').click(function(e) {
-                      window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('div[id$=divTableDataHolder2]').html()));
+                  <script>
+                    $('[id$=downloadexcel]').click(function(e) {
+                      window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('div[id$=divTableDataHolder]').html()));
                       e.preventDefault()
                     });
                   </script>
+                </div>
               </div>
             </div>
-          </div>
             <br>
             <br>
+
             <div class="card shadow mb-10">
               <div class="card-body" style="overflow-x: auto">
-                <div id="divTableDataHolder3">
-                <table id="example-table" class="table table-bordered" style="width: 100%">
+                <div id="divTableDataHolder">
+                  <table id="example-table" class="table table-bordered" style="width: 100%">
                     <thead>
                       <tr>
                         <th colspan="2" style="text-align: center; border: 1px solid black">FORMULIR A</th>
@@ -1374,7 +1462,7 @@ $statement->close();
                     <tbody>
                     <?php
                       $noSasgis = 1;
-                      foreach ($result['Sasaran Strategis'] as &$result_sasaran_strategis):          
+                      foreach ($result['Pengadaan'] as &$result_pengadaan):          
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"></td>
@@ -1382,14 +1470,14 @@ $statement->close();
                         <td style="border-right: 1px solid black"></td>
                         <td style="border-right: 1px solid black"></td>
                         <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
-                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_pengadaan['total_reg']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_pengadaan['total_str']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_pengadaan['total']) ?> </td>
                       <?php
                       endforeach;
                       ?>
 
-                    <?php
+                      <?php
                       $noSasgis = 1;
                       foreach ($result['Sasaran Strategis'] as &$result_sasaran_strategis):                
                       ?>
@@ -1405,13 +1493,10 @@ $statement->close();
                         <td style="border-right: 1px solid black"> <?= number_format($result_sasaran_strategis['total_reg']) ?> </td>
                         <td style="border-right: 1px solid black"> <?= number_format($result_sasaran_strategis['total_str']) ?> </td>
                         <td style="border-right: 1px solid black"> <?= number_format($result_sasaran_strategis['total']) ?> </td>
-                      <?php  
-                      endforeach;
-                      ?>
 
                       <?php
-                      $noIKU = 1;
-                      foreach ($result['IKU'] as &$result_iku):
+                        $noIKU = 1;
+                        foreach($result_sasaran_strategis['IKU'] as $result_iku):
                       ?>
                       <tr style="empty-cells: hide">
                         <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_iku['kode_indikatorutama'] ?> </td>
@@ -1419,10 +1504,228 @@ $statement->close();
                           <b>IKU <?= $noIKU++ ?>:</b>
                           <br> <?= $result_iku['nama_indikatorutama'] ?>
                         </td>
-                        <td style="border-right: 1px solid black"> <?= number_format($result_iku['volume_indikatorutama']) ?> </td>
+                        <td style="border-right: 1px solid black"><?= number_format($result_iku['volume_indikatorutama']) ?></td>
                         <td style="border-right: 1px solid black"><?= $result_iku['satuan_indikatorutama'] ?></td>
+                        <td style="border-right: 1px solid black"></td>                      
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                      </tr>
+                      <?php
+                          $noProgram = 1;
+                          foreach ($result_iku['Program'] as &$result_program):
+                      ?>
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_program['kode_program'] ?> </td>
+                        <td style="border-right: 1px solid black">
+                          <b>Program <?= $noProgram++ ?>:</b>
+                          <br> <?= $result_program['nama_program'] ?>
+                        </td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                    
+                        <td style="border-right: 1px solid black"> <?= number_format($result_program['total_reg']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_program['total_str']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_program['total']) ?> </td>
+                      </tr>
+                      <?php
+                            $noSaspro = 1;
+                            foreach ($result_program['Sasaran Program'] as &$result_sasaran_program):
+                      ?>
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_sasaran_program['kode_sasaranprogram'] ?> </td>
+                        <td style="border-right: 1px solid black">
+                          <b>Sasaran Program <?= $noSaspro++ ?>:</b>
+                          <br> <?= $result_sasaran_program['nama_sasaranprogram'] ?>
+                        </td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                      
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                      </tr>
+                      <?php
+                              $noIKP = 1;
+                              foreach ($result_sasaran_program['IKP'] as &$result_ikp):
+                      ?>
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_ikp['kode_indikatorprogram'] ?> </td>
+                        <td style="border-right: 1px solid black">
+                          <b>IKP <?= $noIKP++ ?>:</b>
+                          <br> <?= $result_ikp['nama_indikatorprogram'] ?>
+                        </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_ikp['volume_indikatorprogram']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= $result_ikp['satuan_indikatorprogram'] ?> </td>
+                        <td style="border-right: 1px solid black"></td>
+                        
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                      </tr>
+                      <?php
+                                $noKegiatan = 1;
+                                foreach ($result_ikp['Kegiatan'] as &$result_kegiatan):
+                      ?>
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_kegiatan['kode_kegiatan'] ?> </td>
+                        <td style="border-right: 1px solid black">
+                          <b>Kegiatan <?= $noKegiatan++ ?>:</b>
+                          <br> <?= $result_kegiatan['nama_kegiatan'] ?>
+                        </td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
                         <td style="border-right: 1px solid black"></td>
                        
+                        <td style="border-right: 1px solid black"> <?= number_format($result_kegiatan['total_reg']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_kegiatan['total_str']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_kegiatan['total']) ?> </td>
+                      </tr>
+                      <?php
+                                  $noSasgik = 1;
+                                  foreach ($result_kegiatan['Sasaran Kegiatan'] as &$result_sasaran_kegiatan):
+                      ?>
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_sasaran_kegiatan['kode_sasarankegiatan'] ?> </td>
+                        <td style="border-right: 1px solid black">
+                          <b>Sasaran Kegiatan <?= $noSasgik++ ?>:</b>
+                          <br> <?= $result_sasaran_kegiatan['nama_sasarankegiatan'] ?>
+                        </td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                      </tr>
+                      <?php
+                                    $noIndgik = 1;
+                                    foreach ($result_sasaran_kegiatan['IKK'] as &$result_ikk):
+                      ?>
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_ikk['kode_indikatorkegiatan'] ?> </td>
+                        <td style="border-right: 1px solid black">
+                          <b>IKK <?= $noIndgik++ ?>:</b>
+                          <br> <?= $result_ikk['nama_indikatorkegiatan'] ?>
+                        </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_ikk['volume_indikatorkegiatan']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= $result_ikk['satuan_indikatorkegiatan'] ?> </td>
+                        <td style="border-right: 1px solid black"></td>
+                      
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                      </tr>
+                      <?php
+                      $noOutput = 1;
+                      foreach ($result_ikk['Output'] as &$result_output):
+                      ?>
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_output['kode_output'] ?> </td>
+                        <td style="border-right: 1px solid black">
+                          <b>Output <?= $noOutput++ ?>: </b>
+                          <br> <?= $result_output['nama_output'] ?>
+                        </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_output['volume_output']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= $result_output['satuan_output'] ?> </td>
+                        <td style="border-right: 1px solid black"></td>                  
+                        <td style="border-right: 1px solid black"> <?= number_format($result_output['total_reg']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_output['total_str']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_output['total']) ?> </td>
+                      </tr>
+                        <?php
+                        $noKomponen = 1;
+                        foreach (($result_output['Komponen'] ?? array()) as &$result_komponen):
+                        ?>
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_komponen['kode_komponen'] ?> </td>
+                        <td style="border-right: 1px solid black">
+                          <b>&nbsp;&nbsp;Komponen <?= $noKomponen++ ?>: </b>
+                          <br>&nbsp;&nbsp;<?= $result_komponen['nama_komponen'] ?>
+                        </td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                       
+                        <td style="border-right: 1px solid black"> <?= number_format($result_komponen['total_reg']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_komponen['total_str']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_komponen['total'])?> </td>
+                      </tr> 
+                          <?php
+                          $noAktivitas = 1;
+                          foreach (($result_komponen['Aktivitas'] ?? array()) as &$result_aktivitas):
+                          ?> 
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"> <?= $result_aktivitas['kode_aktivitas'] ?> </td>
+                        <td style="border-right: 1px solid black">
+                          <b>&nbsp;&nbsp;&nbsp;&nbsp;Aktifitas <?= $noAktivitas++ ?>: </b>
+                          <br>&nbsp;&nbsp;&nbsp;&nbsp;<?= $result_aktivitas['nama_aktivitas'] ?>
+                        </td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>                  
+                        <td style="border-right: 1px solid black"> <?= number_format($result_aktivitas['total_reg']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_aktivitas['total_str']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_aktivitas['total'])?> </td>
+                      </tr> 
+                            <?php
+                            $noAkun = 1;
+                            foreach (($result_aktivitas['Akun']?? array()) as &$result_akun):
+                            ?> 
+                      <tr style="empty-cells: hide">
+                        <td style="border-bottom: 1px dashed black; border-left: 1px solid black; border-right: 1px solid black"> <?= $result_akun['kode_akun'] ?> </td>
+                        <td style="border-bottom: 1px dashed black; border-right: 1px solid black">
+                          <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Akun <?= $noAkun++ ?>: </b>
+                          <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $result_akun['nama_akun'] ?>
+                        </td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        
+                        <td style="border-right: 1px solid black"> <?= number_format($result_akun['total_reg']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_akun['total_str']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_akun['total']) ?> </td>
+                      </tr> 
+                              <?php
+                              foreach (($result_akun['Detail'] ?? array()) as &$result_detail):
+                              ?>
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $result_detail['nama_detail'] ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_detail['volume_detail']) ?> </td>
+                     
+                        <td style="border-right: 1px solid black"> <?= $result_detail['satuan_detail'] ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_detail['harga_detail']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_detail['total_reg']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_detail['total_str']) ?> </td>
+                        <td style="border-right: 1px solid black"> <?= number_format($result_detail['total']) ?> </td>
+                      </tr>
+                      <?php
+                              endforeach;
+                            endforeach;
+                          endforeach;
+                        endforeach;
+                      endforeach;
+                      ?>
+                      <?php
+                                    endforeach;
+                                  endforeach;
+                                endforeach;
+                              endforeach;
+                            endforeach;
+                          endforeach;
+                        endforeach;
+                      ?>
+                      <tr style="empty-cells: hide">
+                        <td style="border-left: 1px solid black; border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                        <td style="border-right: 1px solid black"></td>
+                      
                         <td style="border-right: 1px solid black"></td>
                         <td style="border-right: 1px solid black"></td>
                         <td style="border-right: 1px solid black"></td>
@@ -1433,12 +1736,15 @@ $statement->close();
                     </tbody>
                   </table>
                   <script>
-                    $('[id$=downloadexcel3]').click(function(e) {
-                      window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('div[id$=divTableDataHolder3]').html()));
+                    $('[id$=downloadexcel]').click(function(e) {
+                      window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('div[id$=divTableDataHolder]').html()));
                       e.preventDefault()
                     });
                   </script>
-
+                </div>
+              </div>
+            </div>
+                 
               </div>
             </div>
           </div>
